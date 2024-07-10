@@ -1,0 +1,7 @@
+database:
+  mysql:
+    host: 124.70.50.247
+    port: 3306
+    user: root
+    password: Chen1027!
+    dbname: board
