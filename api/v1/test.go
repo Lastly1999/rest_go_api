@@ -7,5 +7,5 @@ import (
 )
 
 func Test(ctx *gin.Context) {
-	ctx.String(http.StatusOK, config.Config.App.Mode)
+	ctx.String(http.StatusOK, config.GlobalConfig.App.Mode)
 }

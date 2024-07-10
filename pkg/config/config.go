@@ -15,7 +15,7 @@ type MysqlConfig struct {
 }
 
 type DatabaseConfig struct {
-	MysqlConfig MysqlConfig `yaml:"mysql"`
+	Mysql MysqlConfig `yaml:"mysql"`
 }
 
 type AppConfig struct {

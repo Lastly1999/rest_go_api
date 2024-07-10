@@ -1,34 +1,40 @@
 package config
 
 import (
-	"fmt"
-	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
-	"os"
+	"resetgoapi.com/rest_go_api/global"
 )
 
-var Config AppConfig
+var GlobalConfig *AppConfig
 
 func Setup() {
-	config := "app.yaml"
-	if configEnv := os.Getenv("APP_ENV"); configEnv != "" {
-		config = configEnv
+	// 读取 app.yaml 文件
+	viper.SetConfigName("app")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("./conf") // 可以根据实际情况调整配置文件路径
+
+	err := viper.ReadInConfig()
+	if err != nil {
+		global.Logger.Error("Error reading config file, %s", err)
 	}
-	v := viper.New()
-	v.SetConfigFile(config)
-	v.SetConfigType("yaml")
-	if err := v.ReadInConfig(); err != nil {
-		panic(fmt.Errorf("read config failed: %s \n", err))
+
+	// 获取 app.mode 的值
+	mode := viper.GetString("app.mode")
+	if mode == "" {
+		global.Logger.Error("app.mode is not set in app.yaml")
 	}
-	v.WatchConfig()
-	v.OnConfigChange(func(in fsnotify.Event) {
-		fmt.Println("config fileDriver changed:", in.Name)
-		// 重载配置,这里可以进行重启服务器,或者其他操作
-		if err := v.Unmarshal(&Config); err != nil {
-			fmt.Println(err)
-		}
-	})
-	if err := v.Unmarshal(&Config); err != nil {
-		fmt.Println(err)
+
+	// 根据 mode 加载相应的配置文件
+	viper.SetConfigName(mode)
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("./conf")
+	err = viper.MergeInConfig()
+	if err != nil {
+		global.Logger.Error("Error reading %s config file, %s", mode, err)
 	}
+	err = viper.Unmarshal(&GlobalConfig)
+	if err != nil {
+		global.Logger.Error("Unable to decode into struct, %v", err)
+	}
+	global.Logger.Infof("Successfully loaded configuration for mode: %s", mode)
 }
