@@ -14,8 +14,16 @@ type MysqlConfig struct {
 	Dbname   string `yaml:"dbname"`
 }
 
+type RedisConfig struct {
+	Host     string `yaml:"host"`
+	Port     string `yaml:"port"`
+	Password string `yaml:"password"`
+	DB       int    `yaml:"db"`
+}
+
 type DatabaseConfig struct {
 	Mysql MysqlConfig `yaml:"mysql"`
+	Redis RedisConfig `yaml:"redis"`
 }
 
 type AppConfig struct {
