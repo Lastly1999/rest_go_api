@@ -1,0 +1,15 @@
+info:
+  contact: {}
+paths:
+  /user/page:
+    get:
+      consumes:
+      - application/json
+      description: get string by ID
+      produces:
+      - application/json
+      responses: {}
+      summary: 用户列表
+      tags:
+      - 用户管理
+swagger: "2.0"

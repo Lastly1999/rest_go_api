@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 	"resetgoapi.com/rest_go_api/global"
 	"resetgoapi.com/rest_go_api/pkg/config"
 )
@@ -13,7 +14,11 @@ func Setup() {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/board?charset=utf8mb4&parseTime=True&loc=Local",
 		mysqlConfig.User, mysqlConfig.Password, mysqlConfig.Host, mysqlConfig.Port,
 	)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			SingularTable: true,
+		},
+	})
 	if err != nil {
 		global.Logger.Error("Failed to connect to the database. Please check your configuration and database server.")
 	}

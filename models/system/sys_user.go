@@ -1,4 +1,4 @@
-package system
+package model
 
 import (
 	"time"
@@ -14,23 +14,23 @@ type SysUser struct {
 	// 邮箱
 	Email string `json:"email" form:"email"`
 	// 用户昵称
-	NikeName string `json:"nike_name" form:"nike_name"`
+	NikeName string `json:"nikeName" form:"nikeName"`
 	// 性别 0未知 1男 2 女
-	Gender bool `json:"gender" form:"gender"`
+	Gender int64 `json:"gender" form:"gender"`
 	// 手机号
 	Phone string `json:"phone" form:"phone"`
 	// 头像
 	Avatar string `json:"avatar" form:"avatar"`
 	// 启用状态 0 启用 1 禁用
-	Status bool `json:"status" form:"status"`
+	Status int64 `json:"status" form:"status"`
 	// 删除状态 0 正常 1删除
-	DelFlag int64 `json:"del_flag" form:"del_flag"`
+	DelFlag int64 `json:"delFlag" form:"delFlag"`
 	// 备注
 	Remark string `json:"remark" form:"remark"`
 	//
-	DeptId int64 `json:"dept_id" form:"dept_id"`
+	DeptId int64 `json:"deptId" form:"deptId"`
 	//
-	CreatedAt time.Time `json:"created_at" form:"created_at" gorm:"autoCreateTime"`
+	CreatedAt time.Time `json:"createdAt" form:"createdAt" gorm:"autoCreateTime"`
 	//
-	UpdatedAt time.Time `json:"updated_at" form:"updated_at" gorm:"autoUpdateTime"`
+	UpdatedAt time.Time `json:"updatedAt" form:"updatedAt" gorm:"autoUpdateTime"`
 }
