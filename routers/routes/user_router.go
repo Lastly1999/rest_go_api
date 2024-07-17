@@ -10,8 +10,9 @@ func RegisterUserRouter(router *gin.RouterGroup) {
 	userApi := v1.UserApi{}
 	{
 		userRouter.GET("/page", userApi.Page)
-		userRouter.GET("/create", userApi.Create)
-		userRouter.GET("/update", userApi.Update)
-		userRouter.GET("/delete", userApi.Delete)
+		userRouter.POST("/create", userApi.Create)
+		userRouter.PATCH("/update", userApi.Update)
+		userRouter.GET("/info/:id", userApi.Info)
+		userRouter.DELETE("/delete/:id", userApi.Delete)
 	}
 }

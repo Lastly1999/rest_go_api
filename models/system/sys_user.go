@@ -1,12 +1,9 @@
-package model
+package models
 
-import (
-	"time"
-)
+import "resetgoapi.com/rest_go_api/models"
 
 type SysUser struct {
-	//
-	Id int64 `json:"id" form:"id" gorm:"primaryKey"`
+	models.BaseModel
 	// 用户名
 	Username string `json:"username" form:"username"`
 	// 密码
@@ -14,7 +11,7 @@ type SysUser struct {
 	// 邮箱
 	Email string `json:"email" form:"email"`
 	// 用户昵称
-	NikeName string `json:"nikeName" form:"nikeName"`
+	NickName string `json:"nickName" form:"nickName"`
 	// 性别 0未知 1男 2 女
 	Gender int64 `json:"gender" form:"gender"`
 	// 手机号
@@ -27,10 +24,6 @@ type SysUser struct {
 	DelFlag int64 `json:"delFlag" form:"delFlag"`
 	// 备注
 	Remark string `json:"remark" form:"remark"`
-	//
+	// 部门id
 	DeptId int64 `json:"deptId" form:"deptId"`
-	//
-	CreatedAt time.Time `json:"createdAt" form:"createdAt" gorm:"autoCreateTime"`
-	//
-	UpdatedAt time.Time `json:"updatedAt" form:"updatedAt" gorm:"autoUpdateTime"`
 }

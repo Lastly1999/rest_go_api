@@ -10,20 +10,22 @@ type MysqlConfig struct {
 	Host     string `yaml:"host"`
 	Port     string `yaml:"port"`
 	User     string `yaml:"user"`
-	Password string `yaml:"password"`
+	Password string `yaml:"cypher"`
 	Dbname   string `yaml:"dbname"`
 }
 
 type RedisConfig struct {
 	Host     string `yaml:"host"`
 	Port     string `yaml:"port"`
-	Password string `yaml:"password"`
+	Password string `yaml:"cypher"`
 	DB       int    `yaml:"db"`
 }
 
 type JwtConfig struct {
 	SecretKey string `yaml:"secretkey"`
-	ExpiresIn int    `yaml:"expiresin"`
+	ExpiresIn int64  `yaml:"expiresin"`
+	Isuser    string `yaml:"isuser"`
+	HeaderKey string `yaml:"headerkey"`
 }
 
 type DatabaseConfig struct {

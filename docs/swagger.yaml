@@ -1,15 +1,300 @@
+basePath: /v1
+definitions:
+  models.SysUser:
+    properties:
+      avatar:
+        description: 头像
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      delFlag:
+        description: 删除状态 0 正常 1删除
+        type: integer
+      deptId:
+        description: 部门id
+        type: integer
+      email:
+        description: 邮箱
+        type: string
+      gender:
+        description: 性别 0未知 1男 2 女
+        type: integer
+      id:
+        description: 主键
+        type: integer
+      nickName:
+        description: 用户昵称
+        type: string
+      password:
+        description: 密码
+        type: string
+      phone:
+        description: 手机号
+        type: string
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 启用状态 0 启用 1 禁用
+        type: integer
+      updatedAt:
+        description: 更新时间
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
+  request.CreateUserRequest:
+    properties:
+      avatar:
+        description: 头像
+        type: string
+      delFlag:
+        description: 删除状态 0 正常 1删除
+        type: integer
+      deptId:
+        description: 部门id
+        type: integer
+      email:
+        description: 邮箱
+        type: string
+      gender:
+        description: 性别 0未知 1男 2 女
+        type: integer
+      nickName:
+        description: 用户昵称
+        type: string
+      phone:
+        description: 手机号
+        type: string
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 启用状态 0 启用 1 禁用
+        type: integer
+      username:
+        description: 用户名
+        type: string
+    type: object
+  request.SignRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  request.SignResponse:
+    properties:
+      accessToken:
+        type: string
+      expiresIn:
+        type: integer
+    type: object
+  request.UpdateUserRequest:
+    properties:
+      avatar:
+        description: 头像
+        type: string
+      delFlag:
+        description: 删除状态 0 正常 1删除
+        type: integer
+      deptId:
+        description: 部门id
+        type: integer
+      email:
+        description: 邮箱
+        type: string
+      gender:
+        description: 性别 0未知 1男 2 女
+        type: integer
+      id:
+        type: integer
+      nickName:
+        description: 用户昵称
+        type: string
+      phone:
+        description: 手机号
+        type: string
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 启用状态 0 启用 1 禁用
+        type: integer
+      username:
+        description: 用户名
+        type: string
+    type: object
+  response.PageResponse:
+    properties:
+      list: {}
+      total:
+        type: integer
+    type: object
+  result.HttpResult:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+host: localhost:8000
 info:
-  contact: {}
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: rest_go_api
+  version: "1.0"
 paths:
+  /login/sign:
+    post:
+      parameters:
+      - description: 用户登录
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.SignRequest'
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/result.HttpResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/request.SignResponse'
+              type: object
+      summary: 用户登录
+      tags:
+      - 授权
+  /user/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建用户
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 创建用户
+      tags:
+      - 用户管理
+  /user/delete/{id}:
+    delete:
+      parameters:
+      - description: 用户id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 删除用户
+      tags:
+      - 用户管理
+  /user/info/{id}:
+    get:
+      parameters:
+      - description: 用户id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/result.HttpResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysUser'
+              type: object
+      summary: 用户详情
+      tags:
+      - 用户管理
   /user/page:
     get:
       consumes:
       - application/json
-      description: get string by ID
+      parameters:
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: size
+        type: integer
       produces:
       - application/json
-      responses: {}
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/result.HttpResult'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResponse'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.SysUser'
+                        type: array
+                    type: object
+              type: object
       summary: 用户列表
       tags:
       - 用户管理
+  /user/update:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: 更新用户
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 更新用户信息
+      tags:
+      - 用户管理
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

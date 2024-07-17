@@ -15,4 +15,6 @@ database:
     db: 0
 jwt:
   secretkey: !lsldalsdlasdlasldlasldasdasdsadsda
-  expiresin: 60000
+  expiresin: 3600
+  isuser: rest_go_api
+  headerKey: Authorization

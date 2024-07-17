@@ -6,13 +6,14 @@ import (
 	models "resetgoapi.com/rest_go_api/models/system"
 	"resetgoapi.com/rest_go_api/pkg/config"
 	"resetgoapi.com/rest_go_api/pkg/jwt"
+	"time"
 )
 
 type JwtService struct {
 }
 
 type IJwtService interface {
-	CheckToken(token string) (interface{}, error)
+	CheckToken(key any, jwtStr string, options ...gojwt.ParserOption) (interface{}, error)
 	GetToken(user *models.SysUser) string
 }
 
@@ -37,11 +38,16 @@ func (s *JwtService) CheckToken(key any, jwtStr string, options ...gojwt.ParserO
 // 派发token
 func (s *JwtService) GetToken(user *models.SysUser) string {
 	claims := jwt.JWTClaims{
-		User:             *user,
-		RegisteredClaims: gojwt.RegisteredClaims{},
+		User: *user,
+		RegisteredClaims: gojwt.RegisteredClaims{
+			ExpiresAt: gojwt.NewNumericDate(time.Now().Add(time.Second * time.Duration(config.GlobalConfig.Jwt.ExpiresIn))), // 过期时间
+			IssuedAt:  gojwt.NewNumericDate(time.Now()),                                                                     // 签发时间
+			NotBefore: gojwt.NewNumericDate(time.Now()),                                                                     // 生效时间
+			Issuer:    config.GlobalConfig.Jwt.Isuser,                                                                       // 签发人
+		},
 	}
 	token := gojwt.NewWithClaims(gojwt.SigningMethodHS256, claims)
-	signToken, err := token.SignedString(config.GlobalConfig.Jwt.SecretKey)
+	signToken, err := token.SignedString([]byte(config.GlobalConfig.Jwt.SecretKey))
 	if err != nil {
 		return ""
 	}

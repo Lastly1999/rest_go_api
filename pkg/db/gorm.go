@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"resetgoapi.com/rest_go_api/global"
 	"resetgoapi.com/rest_go_api/pkg/config"
@@ -18,6 +19,7 @@ func Setup() {
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
+		Logger: logger.Default.LogMode(logger.Info), // 设置为 LogModeSQL 以输出 SQL 语句
 	})
 	if err != nil {
 		global.Logger.Error("Failed to connect to the database. Please check your configuration and database server.")
