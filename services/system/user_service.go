@@ -10,6 +10,7 @@ type UserService struct{}
 type IUserService interface {
 	Create(user *models.SysUser)
 	Find() []*models.SysUser
+	FindOneByUserName(user *models.SysUser) error
 }
 
 func (u *UserService) Create(user *models.SysUser) {
@@ -20,4 +21,11 @@ func (u *UserService) Create(user *models.SysUser) {
 func (u *UserService) Find() (users []*models.SysUser) {
 	global.GORM.Find(&users)
 	return
+}
+
+func (u *UserService) FindOneByUserName(user *models.SysUser) error {
+	if err := global.GORM.First(&user, "username").Error; err != nil {
+		return err
+	}
+	return nil
 }

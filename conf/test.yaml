@@ -1,0 +1,18 @@
+app:
+  port: 8000
+database:
+  mysql:
+    host: 124.70.50.247
+    port: 3306
+    user: root
+    password: Chen1027!
+    dbname: board
+  redis:
+    host: 124.70.50.247
+    port: 6379
+    user: root
+    password: Chen1027!
+    db: 0
+jwt:
+  secretkey: !lsldalsdlasdlasldlasldasdasdsadsda
+  expiresin: 60000

@@ -13,3 +13,6 @@ database:
     user: root
     password: Chen1027!
     db: 0
+jwt:
+  secretkey: !lsldalsdlasdlasldlasldasdasdsadsda
+  expiresin: 60000

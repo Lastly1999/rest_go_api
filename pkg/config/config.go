@@ -21,6 +21,11 @@ type RedisConfig struct {
 	DB       int    `yaml:"db"`
 }
 
+type JwtConfig struct {
+	SecretKey string `yaml:"secretkey"`
+	ExpiresIn int    `yaml:"expiresin"`
+}
+
 type DatabaseConfig struct {
 	Mysql MysqlConfig `yaml:"mysql"`
 	Redis RedisConfig `yaml:"redis"`
@@ -29,4 +34,5 @@ type DatabaseConfig struct {
 type AppConfig struct {
 	App      BasicAppConfig `yaml:"app"`
 	Database DatabaseConfig `yaml:"database"`
+	Jwt      JwtConfig      `yaml:"jwt"`
 }
