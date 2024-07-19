@@ -34,7 +34,7 @@ func (r RoleService) Create(request *request.CreateRoleRequest) error {
 func (r RoleService) Update(request *request.UpdateRoleRequest) error {
 	var role models.SysRole
 	role.Id = request.Id
-	if err := global.GORM.Updates(&role).Updates(&models.SysRole{
+	if err := global.GORM.Model(&role).Updates(&models.SysRole{
 		RoleName: request.RoleName,
 		RoleKey:  request.RoleKey,
 		RoleSort: request.RoleSort,
@@ -53,20 +53,14 @@ func (r RoleService) Delete(id int64) error {
 	return nil
 }
 
-func (r RoleService) FindOne(id int64) (*models.SysRole, error) {
-	var role models.SysRole
-	if err := global.GORM.Where("id = ?", id).First(&role).Error; err != nil {
-		return nil, err
-	}
-	return &role, nil
+func (r RoleService) FindOne(id int64) (role *models.SysRole, err error) {
+	err = global.GORM.Where("id = ?", id).First(&role).Error
+	return
 }
 
-func (r RoleService) Find() ([]*models.SysRole, error) {
-	var roles []*models.SysRole
-	if err := global.GORM.Find(&roles).Error; err != nil {
-		return nil, err
-	}
-	return roles, nil
+func (r RoleService) Find() (roles []*models.SysRole, err error) {
+	err = global.GORM.Find(&roles).Error
+	return
 }
 
 func (r RoleService) Page(request *request.RoleListRequest) (roles *models.SysRole, total int64, err error) {

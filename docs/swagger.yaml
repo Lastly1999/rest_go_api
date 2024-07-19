@@ -1,5 +1,59 @@
 basePath: /v1
 definitions:
+  models.SysPost:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键
+        type: integer
+      postCode:
+        description: 岗位编码
+        type: string
+      postName:
+        description: 岗位名称
+        type: string
+      postSort:
+        description: 岗位排序
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 启用状态 0 启用 1 禁用
+        type: boolean
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
+  models.SysRole:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      roleKey:
+        description: 角色标识
+        type: string
+      roleName:
+        description: 角色名称
+        type: string
+      roleSort:
+        description: 角色排序
+        type: integer
+      status:
+        description: 启用状态 0 启用 1 禁用
+        type: boolean
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
   models.SysUser:
     properties:
       avatar:
@@ -44,6 +98,42 @@ definitions:
       username:
         description: 用户名
         type: string
+    type: object
+  request.CreatePostRequest:
+    properties:
+      postCode:
+        description: 岗位编码
+        type: string
+      postName:
+        description: 岗位名称
+        type: string
+      postSort:
+        description: 岗位排序
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 启用状态 0 启用 1 禁用
+        type: boolean
+    type: object
+  request.CreateRoleRequest:
+    properties:
+      remark:
+        description: 备注
+        type: string
+      roleKey:
+        description: 角色标识
+        type: string
+      roleName:
+        description: 角色名称
+        type: string
+      roleSort:
+        description: 角色排序
+        type: integer
+      status:
+        description: 启用状态 0 启用 1 禁用
+        type: boolean
     type: object
   request.CreateUserRequest:
     properties:
@@ -94,6 +184,26 @@ definitions:
         type: string
       expiresIn:
         type: integer
+    type: object
+  request.UpdateRoleRequest:
+    properties:
+      id:
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      roleKey:
+        description: 角色标识
+        type: string
+      roleName:
+        description: 角色名称
+        type: string
+      roleSort:
+        description: 角色排序
+        type: integer
+      status:
+        description: 启用状态 0 启用 1 禁用
+        type: boolean
     type: object
   request.UpdateUserRequest:
     properties:
@@ -180,6 +290,219 @@ paths:
       summary: 用户登录
       tags:
       - 授权
+  /post/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建岗位
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreatePostRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 创建岗位
+      tags:
+      - 岗位管理
+  /post/delete/{id}:
+    delete:
+      parameters:
+      - description: 岗位id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 删除岗位
+      tags:
+      - 岗位管理
+  /post/info/{id}:
+    get:
+      parameters:
+      - description: 岗位id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 岗位详情
+      tags:
+      - 岗位管理
+  /post/page:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/result.HttpResult'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResponse'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.SysPost'
+                        type: array
+                    type: object
+              type: object
+      summary: 岗位列表
+      tags:
+      - 岗位管理
+  /post/update:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: 更新岗位
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 更新岗位
+      tags:
+      - 岗位管理
+  /role/create:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: 更新角色
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 更新角色
+      tags:
+      - 角色管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建角色
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 创建角色
+      tags:
+      - 角色管理
+  /role/delete/{id}:
+    delete:
+      parameters:
+      - description: 角色id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 删除角色
+      tags:
+      - 角色管理
+  /role/info/{id}:
+    delete:
+      parameters:
+      - description: 角色id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 角色详情
+      tags:
+      - 角色管理
+  /role/page:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/result.HttpResult'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResponse'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.SysRole'
+                        type: array
+                    type: object
+              type: object
+      summary: 角色列表
+      tags:
+      - 角色管理
   /user/create:
     post:
       consumes:

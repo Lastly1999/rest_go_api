@@ -5,10 +5,10 @@ import (
 	v1 "resetgoapi.com/rest_go_api/api/v1/system"
 )
 
-func RegisterLoginRouter(router *gin.RouterGroup) {
-	loginRouter := router.Group("/login")
+func RegisterLoginRoutes(route *gin.RouterGroup) {
+	loginRoute := route.Group("/login")
 	loginApi := v1.LoginApi{}
 	{
-		loginRouter.POST("/sign", loginApi.Login)
+		loginRoute.POST("/sign", loginApi.Login)
 	}
 }

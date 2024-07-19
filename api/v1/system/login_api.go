@@ -19,15 +19,16 @@ type LoginApi struct {
 //	@Router		/login/sign [post]
 func (api *LoginApi) Login(ctx *gin.Context) {
 	signRequest := &request.SignRequest{}
+	jsonResult := result.JsonResult{Context: ctx}
 	if err := ctx.ShouldBindJSON(signRequest); err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
 	loginService := service.LoginService{}
 	resp, err := loginService.Sign(signRequest)
 	if err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	result.HttpResultSuccess(ctx, resp)
+	jsonResult.HttpResultSuccess(resp)
 }

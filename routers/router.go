@@ -17,7 +17,9 @@ func InitRouter() *gin.Engine {
 	authApi := app.Group("/v1")
 	authApi.Use(middleware.JwtMiddleware(config.GlobalConfig.Jwt.Isuser))
 
-	routes.RegisterLoginRouter(v1Api)
-	routes.RegisterUserRouter(authApi)
+	routes.RegisterLoginRoutes(v1Api)
+	routes.RegisterUserRoutes(authApi)
+	routes.RegisterPostRoutes(authApi)
+	routes.RegisterRoleRoutes(authApi)
 	return app
 }

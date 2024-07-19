@@ -74,9 +74,7 @@ func (u *UserService) FindPage(request *request.UserRequest) (users []*models.Sy
 	return
 }
 
-func (u *UserService) FindOneByUserName(user *models.SysUser) error {
-	if err := global.GORM.Where("username = ?", &user.Username).First(&user).Error; err != nil {
-		return err
-	}
-	return nil
+func (u *UserService) FindOneByUserName(user *models.SysUser) (err error) {
+	err = global.GORM.Where("username = ?", &user.Username).First(&user).Error
+	return
 }
