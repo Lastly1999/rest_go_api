@@ -22,16 +22,17 @@ type UserApi struct {
 //	@Router		/user/create [post]
 func (api *UserApi) Create(ctx *gin.Context) {
 	createUserRequest := &request.CreateUserRequest{}
+	jsonResult := result.JsonResult{Context: ctx}
 	if err := ctx.ShouldBindJSON(createUserRequest); err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
 	userService := service.UserService{}
 	if err := userService.Create(createUserRequest); err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	result.HttpResultSuccess(ctx, nil)
+	jsonResult.HttpResultSuccess(nil)
 }
 
 // Update godoc
@@ -45,16 +46,17 @@ func (api *UserApi) Create(ctx *gin.Context) {
 //	@Router		/user/update [patch]
 func (api *UserApi) Update(ctx *gin.Context) {
 	updateUserRequest := &request.UpdateUserRequest{}
+	jsonResult := result.JsonResult{Context: ctx}
 	if err := ctx.ShouldBindJSON(updateUserRequest); err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
 	userService := service.UserService{}
 	if err := userService.Update(updateUserRequest); err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	result.HttpResultSuccess(ctx, nil)
+	jsonResult.HttpResultSuccess(nil)
 }
 
 // Page godoc
@@ -68,13 +70,14 @@ func (api *UserApi) Update(ctx *gin.Context) {
 //	@Router		/user/page [get]
 func (api *UserApi) Page(ctx *gin.Context) {
 	userReq := &request.UserRequest{}
+	jsonResult := result.JsonResult{Context: ctx}
 	if err := ctx.ShouldBindQuery(userReq); err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
 	userService := service.UserService{}
 	list, total := userService.FindPage(userReq)
-	result.HttpResultSuccessPage(ctx, list, total)
+	jsonResult.HttpResultSuccessPage(list, total)
 }
 
 // Delete godoc
@@ -86,17 +89,18 @@ func (api *UserApi) Page(ctx *gin.Context) {
 //	@Router		/user/delete/{id} [delete]
 func (api *UserApi) Delete(ctx *gin.Context) {
 	id, err := param.GetParamInt64(ctx, "id", 0)
+	jsonResult := result.JsonResult{Context: ctx}
 	if err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
 	userService := service.UserService{}
 	err = userService.Delete(id)
 	if err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	result.HttpResultSuccess(ctx, nil)
+	jsonResult.HttpResultSuccess(nil)
 }
 
 // Info godoc
@@ -108,15 +112,16 @@ func (api *UserApi) Delete(ctx *gin.Context) {
 //	@Router		/user/info/{id} [get]
 func (api *UserApi) Info(ctx *gin.Context) {
 	id, err := param.GetParamInt64(ctx, "id", 0)
+	jsonResult := result.JsonResult{Context: ctx}
 	if err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
 	userService := service.UserService{}
 	user, err := userService.FindOne(id)
 	if err != nil {
-		result.HttpResultError(ctx, err.Error())
+		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	result.HttpResultSuccess(ctx, user)
+	jsonResult.HttpResultSuccess(user)
 }

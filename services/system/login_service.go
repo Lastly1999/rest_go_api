@@ -13,12 +13,12 @@ type ILoginService interface {
 }
 
 func (service *LoginService) Sign(sign *request.SignRequest) (*request.SignResponse, error) {
-	userSerivce := UserService{}
+	userService := UserService{}
 	user := &models.SysUser{
 		Username: sign.Username,
 		Password: sign.Password,
 	}
-	if err := userSerivce.FindOneByUserName(user); err != nil {
+	if err := userService.FindOneByUserName(user); err != nil {
 		return nil, err
 	}
 	if user == nil {

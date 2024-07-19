@@ -12,27 +12,31 @@ type HttpResult struct {
 	Data interface{} `json:"data"`
 }
 
-func HttpResultAuthError(ctx *gin.Context, msg string) {
+type JsonResult struct {
+	Context *gin.Context
+}
+
+func (jsonResult *JsonResult) HttpResultAuthError(msg string) {
 	result := HttpResult{
 		Code: HTTP_STATUS_AUTH_ERROR,
 		Msg:  msg,
 		Data: nil,
 	}
-	ctx.JSON(http.StatusOK, result)
-	ctx.Abort()
+	jsonResult.Context.JSON(http.StatusOK, result)
+	jsonResult.Context.Abort()
 }
 
-func HttpResultSuccess(ctx *gin.Context, data interface{}) {
+func (jsonResult *JsonResult) HttpResultSuccess(data interface{}) {
 	result := HttpResult{
 		Code: HTTP_STATUS_SUCCESS,
 		Msg:  "success",
 		Data: data,
 	}
-	ctx.JSON(http.StatusOK, result)
-	ctx.Abort()
+	jsonResult.Context.JSON(http.StatusOK, result)
+	jsonResult.Context.Abort()
 }
 
-func HttpResultSuccessPage(ctx *gin.Context, data interface{}, total int64) {
+func (jsonResult *JsonResult) HttpResultSuccessPage(data interface{}, total int64) {
 	result := HttpResult{
 		Code: HTTP_STATUS_SUCCESS,
 		Msg:  "success",
@@ -41,16 +45,16 @@ func HttpResultSuccessPage(ctx *gin.Context, data interface{}, total int64) {
 			List:  data,
 		},
 	}
-	ctx.JSON(http.StatusOK, result)
-	ctx.Abort()
+	jsonResult.Context.JSON(http.StatusOK, result)
+	jsonResult.Context.Abort()
 }
 
-func HttpResultError(ctx *gin.Context, msg string) {
+func (jsonResult *JsonResult) HttpResultError(msg string) {
 	result := HttpResult{
 		Code: HTTP_STATUS_ERROR,
 		Msg:  msg,
 		Data: nil,
 	}
-	ctx.JSON(http.StatusOK, result)
-	ctx.Abort()
+	jsonResult.Context.JSON(http.StatusOK, result)
+	jsonResult.Context.Abort()
 }

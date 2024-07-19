@@ -15,9 +15,9 @@ import (
 // @license.url				http://www.apache.org/licenses/LICENSE-2.0.html
 // @host						localhost:8000
 // @BasePath					/v1
-// @securityDefinitions.apikey BearerAuth
-// @in header
-// @name Authorization
+// @securityDefinitions.apikey	BearerAuth
+// @in							header
+// @name						Authorization
 func main() {
 	cmd.Start()
 }
