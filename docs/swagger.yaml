@@ -1,5 +1,62 @@
 basePath: /v1
 definitions:
+  models.SysMenu:
+    properties:
+      component:
+        description: 组件路径
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键
+        type: integer
+      isCache:
+        description: 是否缓存 0缓存 1不缓存
+        type: boolean
+      isFrame:
+        description: 是否外链 0是 1否
+        type: boolean
+      menuIcon:
+        description: 菜单图标
+        type: string
+      menuName:
+        description: 菜单名称
+        type: string
+      menuSort:
+        description: 显示排序
+        type: integer
+      menuType:
+        description: 菜单类型 0目录 1菜单 2按钮
+        type: boolean
+      parentId:
+        description: 父菜单ID
+        type: integer
+      parentName:
+        description: 父菜单名称
+        type: string
+      perms:
+        description: 权限标识
+        type: string
+      query:
+        description: 路由参数
+        type: string
+      remark:
+        description: 备注
+        type: string
+      router:
+        description: 路由地址
+        type: string
+      status:
+        description: 菜单状态 0正常 1停用
+        type: boolean
+      updatedAt:
+        description: 更新时间
+        type: string
+      visible:
+        description: 菜单状态 0显示 1隐藏
+        type: boolean
+    type: object
   models.SysPost:
     properties:
       createdAt:
@@ -99,6 +156,54 @@ definitions:
         description: 用户名
         type: string
     type: object
+  request.CreateMenuRequest:
+    properties:
+      component:
+        description: 组件路径
+        type: string
+      isCache:
+        description: 是否缓存 0缓存 1不缓存
+        type: boolean
+      isFrame:
+        description: 是否外链 0是 1否
+        type: boolean
+      menuIcon:
+        description: 菜单图标
+        type: string
+      menuName:
+        description: 菜单名称
+        type: string
+      menuSort:
+        description: 显示排序
+        type: integer
+      menuType:
+        description: 菜单类型 0目录 1菜单 2按钮
+        type: boolean
+      parentId:
+        description: 父菜单ID
+        type: integer
+      parentName:
+        description: 父菜单名称
+        type: string
+      perms:
+        description: 权限标识
+        type: string
+      query:
+        description: 路由参数
+        type: string
+      remark:
+        description: 备注
+        type: string
+      router:
+        description: 路由地址
+        type: string
+      status:
+        description: 菜单状态 0正常 1停用
+        type: boolean
+      visible:
+        description: 菜单状态 0显示 1隐藏
+        type: boolean
+    type: object
   request.CreatePostRequest:
     properties:
       postCode:
@@ -184,6 +289,56 @@ definitions:
         type: string
       expiresIn:
         type: integer
+    type: object
+  request.UpdateMenuRequest:
+    properties:
+      component:
+        description: 组件路径
+        type: string
+      id:
+        type: integer
+      isCache:
+        description: 是否缓存 0缓存 1不缓存
+        type: boolean
+      isFrame:
+        description: 是否外链 0是 1否
+        type: boolean
+      menuIcon:
+        description: 菜单图标
+        type: string
+      menuName:
+        description: 菜单名称
+        type: string
+      menuSort:
+        description: 显示排序
+        type: integer
+      menuType:
+        description: 菜单类型 0目录 1菜单 2按钮
+        type: boolean
+      parentId:
+        description: 父菜单ID
+        type: integer
+      parentName:
+        description: 父菜单名称
+        type: string
+      perms:
+        description: 权限标识
+        type: string
+      query:
+        description: 路由参数
+        type: string
+      remark:
+        description: 备注
+        type: string
+      router:
+        description: 路由地址
+        type: string
+      status:
+        description: 菜单状态 0正常 1停用
+        type: boolean
+      visible:
+        description: 菜单状态 0显示 1隐藏
+        type: boolean
     type: object
   request.UpdateRoleRequest:
     properties:
@@ -290,6 +445,118 @@ paths:
       summary: 用户登录
       tags:
       - 授权
+  /menu/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建菜单
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateMenuRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 创建菜单
+      tags:
+      - 菜单管理
+  /menu/delete/{id}:
+    delete:
+      parameters:
+      - description: 菜单id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 删除菜单
+      tags:
+      - 菜单管理
+  /menu/info/{id}:
+    get:
+      parameters:
+      - description: 菜单id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/result.HttpResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysMenu'
+              type: object
+      summary: 菜单详情
+      tags:
+      - 菜单管理
+  /menu/page:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/result.HttpResult'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResponse'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.SysMenu'
+                        type: array
+                    type: object
+              type: object
+      summary: 菜单列表
+      tags:
+      - 菜单管理
+  /menu/update:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建菜单
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateMenuRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            $ref: '#/definitions/result.HttpResult'
+      summary: 创建菜单
+      tags:
+      - 菜单管理
   /post/create:
     post:
       consumes:
@@ -455,7 +722,7 @@ paths:
       tags:
       - 角色管理
   /role/info/{id}:
-    delete:
+    get:
       parameters:
       - description: 角色id
         in: path
@@ -466,7 +733,12 @@ paths:
         "200":
           description: desc
           schema:
-            $ref: '#/definitions/result.HttpResult'
+            allOf:
+            - $ref: '#/definitions/result.HttpResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysRole'
+              type: object
       summary: 角色详情
       tags:
       - 角色管理

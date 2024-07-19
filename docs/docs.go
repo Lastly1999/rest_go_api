@@ -63,6 +63,195 @@ const docTemplate = `{
                 }
             }
         },
+        "/menu/create": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "菜单管理"
+                ],
+                "summary": "创建菜单",
+                "parameters": [
+                    {
+                        "description": "创建菜单",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateMenuRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "菜单管理"
+                ],
+                "summary": "删除菜单",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "菜单id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/info/{id}": {
+            "get": {
+                "tags": [
+                    "菜单管理"
+                ],
+                "summary": "菜单详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "菜单id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/result.HttpResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysMenu"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/page": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "菜单管理"
+                ],
+                "summary": "菜单列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/result.HttpResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/response.PageResponse"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.SysMenu"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/update": {
+            "patch": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "菜单管理"
+                ],
+                "summary": "创建菜单",
+                "parameters": [
+                    {
+                        "description": "创建菜单",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateMenuRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
         "/post/create": {
             "post": {
                 "consumes": [
@@ -330,7 +519,7 @@ const docTemplate = `{
             }
         },
         "/role/info/{id}": {
-            "delete": {
+            "get": {
                 "tags": [
                     "角色管理"
                 ],
@@ -348,7 +537,19 @@ const docTemplate = `{
                     "200": {
                         "description": "desc",
                         "schema": {
-                            "$ref": "#/definitions/result.HttpResult"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/result.HttpResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysRole"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -606,6 +807,83 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.SysMenu": {
+            "type": "object",
+            "properties": {
+                "component": {
+                    "description": "组件路径",
+                    "type": "string"
+                },
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "isCache": {
+                    "description": "是否缓存 0缓存 1不缓存",
+                    "type": "boolean"
+                },
+                "isFrame": {
+                    "description": "是否外链 0是 1否",
+                    "type": "boolean"
+                },
+                "menuIcon": {
+                    "description": "菜单图标",
+                    "type": "string"
+                },
+                "menuName": {
+                    "description": "菜单名称",
+                    "type": "string"
+                },
+                "menuSort": {
+                    "description": "显示排序",
+                    "type": "integer"
+                },
+                "menuType": {
+                    "description": "菜单类型 0目录 1菜单 2按钮",
+                    "type": "boolean"
+                },
+                "parentId": {
+                    "description": "父菜单ID",
+                    "type": "integer"
+                },
+                "parentName": {
+                    "description": "父菜单名称",
+                    "type": "string"
+                },
+                "perms": {
+                    "description": "权限标识",
+                    "type": "string"
+                },
+                "query": {
+                    "description": "路由参数",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "router": {
+                    "description": "路由地址",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "菜单状态 0正常 1停用",
+                    "type": "boolean"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "visible": {
+                    "description": "菜单状态 0显示 1隐藏",
+                    "type": "boolean"
+                }
+            }
+        },
         "models.SysPost": {
             "type": "object",
             "properties": {
@@ -741,6 +1019,71 @@ const docTemplate = `{
                 }
             }
         },
+        "request.CreateMenuRequest": {
+            "type": "object",
+            "properties": {
+                "component": {
+                    "description": "组件路径",
+                    "type": "string"
+                },
+                "isCache": {
+                    "description": "是否缓存 0缓存 1不缓存",
+                    "type": "boolean"
+                },
+                "isFrame": {
+                    "description": "是否外链 0是 1否",
+                    "type": "boolean"
+                },
+                "menuIcon": {
+                    "description": "菜单图标",
+                    "type": "string"
+                },
+                "menuName": {
+                    "description": "菜单名称",
+                    "type": "string"
+                },
+                "menuSort": {
+                    "description": "显示排序",
+                    "type": "integer"
+                },
+                "menuType": {
+                    "description": "菜单类型 0目录 1菜单 2按钮",
+                    "type": "boolean"
+                },
+                "parentId": {
+                    "description": "父菜单ID",
+                    "type": "integer"
+                },
+                "parentName": {
+                    "description": "父菜单名称",
+                    "type": "string"
+                },
+                "perms": {
+                    "description": "权限标识",
+                    "type": "string"
+                },
+                "query": {
+                    "description": "路由参数",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "router": {
+                    "description": "路由地址",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "菜单状态 0正常 1停用",
+                    "type": "boolean"
+                },
+                "visible": {
+                    "description": "菜单状态 0显示 1隐藏",
+                    "type": "boolean"
+                }
+            }
+        },
         "request.CreatePostRequest": {
             "type": "object",
             "properties": {
@@ -859,6 +1202,74 @@ const docTemplate = `{
                 },
                 "expiresIn": {
                     "type": "integer"
+                }
+            }
+        },
+        "request.UpdateMenuRequest": {
+            "type": "object",
+            "properties": {
+                "component": {
+                    "description": "组件路径",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isCache": {
+                    "description": "是否缓存 0缓存 1不缓存",
+                    "type": "boolean"
+                },
+                "isFrame": {
+                    "description": "是否外链 0是 1否",
+                    "type": "boolean"
+                },
+                "menuIcon": {
+                    "description": "菜单图标",
+                    "type": "string"
+                },
+                "menuName": {
+                    "description": "菜单名称",
+                    "type": "string"
+                },
+                "menuSort": {
+                    "description": "显示排序",
+                    "type": "integer"
+                },
+                "menuType": {
+                    "description": "菜单类型 0目录 1菜单 2按钮",
+                    "type": "boolean"
+                },
+                "parentId": {
+                    "description": "父菜单ID",
+                    "type": "integer"
+                },
+                "parentName": {
+                    "description": "父菜单名称",
+                    "type": "string"
+                },
+                "perms": {
+                    "description": "权限标识",
+                    "type": "string"
+                },
+                "query": {
+                    "description": "路由参数",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "router": {
+                    "description": "路由地址",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "菜单状态 0正常 1停用",
+                    "type": "boolean"
+                },
+                "visible": {
+                    "description": "菜单状态 0显示 1隐藏",
+                    "type": "boolean"
                 }
             }
         },

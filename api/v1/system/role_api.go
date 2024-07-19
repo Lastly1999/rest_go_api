@@ -85,8 +85,8 @@ func (api *RoleApi) Delete(ctx *gin.Context) {
 //	@Summary	角色详情
 //	@Tags		角色管理
 //	@Param		id	path		int					true	"角色id"
-//	@Success	200	{object}	result.HttpResult	"desc"
-//	@Router		/role/info/{id} [delete]
+//	@Success	200	{object}	result.HttpResult{data=models.SysRole}	"desc"
+//	@Router		/role/info/{id} [get]
 func (api *RoleApi) Info(ctx *gin.Context) {
 	id, err := param.GetParamInt64(ctx, "id", 0)
 	jsonResult := result.JsonResult{Context: ctx}
