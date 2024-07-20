@@ -24,8 +24,7 @@ func (service *LoginService) Sign(sign *request.SignRequest) (*request.SignRespo
 	if user == nil || !cypher.ComparePasswords(user.Password, sign.Password) {
 		return nil, errors.New("账号或者密码错误，请重新登录！")
 	}
-	jwtService := JwtService{}
-	token := jwtService.GetToken(user)
+	token := JwtService.GetToken(user)
 	if token == "" {
 		return nil, errors.New("token派发失败，请重试")
 	}

@@ -26,8 +26,7 @@ func (api *PostApi) Create(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	postService := service.PostService{}
-	if err := postService.Create(&createPostRequest); err != nil {
+	if err := service.PostService.Create(&createPostRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -50,8 +49,7 @@ func (api *PostApi) Update(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	postService := service.PostService{}
-	if err := postService.Update(&updatePostRequest); err != nil {
+	if err := service.PostService.Update(&updatePostRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -74,8 +72,7 @@ func (api *PostApi) Page(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	postService := service.PostService{}
-	posts, total, err := postService.Page(&postListRequest)
+	posts, total, err := service.PostService.Page(&postListRequest)
 	if err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
@@ -97,8 +94,7 @@ func (api *PostApi) Delete(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	postService := service.PostService{}
-	if err := postService.Delete(id); err != nil {
+	if err := service.PostService.Delete(id); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -119,8 +115,7 @@ func (api *PostApi) Info(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	postService := service.PostService{}
-	user, err := postService.FindOne(id)
+	user, err := service.PostService.FindOne(id)
 	if err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return

@@ -24,6 +24,195 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/dept/create": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "创建部门",
+                "parameters": [
+                    {
+                        "description": "创建部门",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateDeptRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/dept/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "删除部门",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "部门id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/dept/info/{id}": {
+            "get": {
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "部门详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "部门id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/result.HttpResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysDept"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/dept/page": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "部门列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/result.HttpResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/response.PageResponse"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.SysDept"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/dept/update": {
+            "patch": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "更新部门",
+                "parameters": [
+                    {
+                        "description": "更新部门",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateDeptRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
         "/login/sign": {
             "post": {
                 "tags": [
@@ -807,6 +996,51 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.SysDept": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "deptName": {
+                    "description": "部门名称",
+                    "type": "string"
+                },
+                "deptSort": {
+                    "description": "显示排序",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "leader": {
+                    "description": "负责人",
+                    "type": "string"
+                },
+                "parentId": {
+                    "description": "父部门ID",
+                    "type": "integer"
+                },
+                "phone": {
+                    "description": "联系电话",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "启用状态 0 启用 1 禁用",
+                    "type": "boolean"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
         "models.SysMenu": {
             "type": "object",
             "properties": {
@@ -1019,6 +1253,39 @@ const docTemplate = `{
                 }
             }
         },
+        "request.CreateDeptRequest": {
+            "type": "object",
+            "properties": {
+                "deptName": {
+                    "description": "部门名称",
+                    "type": "string"
+                },
+                "deptSort": {
+                    "description": "显示排序",
+                    "type": "integer"
+                },
+                "leader": {
+                    "description": "负责人",
+                    "type": "string"
+                },
+                "parentId": {
+                    "description": "父部门ID",
+                    "type": "integer"
+                },
+                "phone": {
+                    "description": "联系电话",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "启用状态 0 启用 1 禁用",
+                    "type": "boolean"
+                }
+            }
+        },
         "request.CreateMenuRequest": {
             "type": "object",
             "properties": {
@@ -1202,6 +1469,42 @@ const docTemplate = `{
                 },
                 "expiresIn": {
                     "type": "integer"
+                }
+            }
+        },
+        "request.UpdateDeptRequest": {
+            "type": "object",
+            "properties": {
+                "deptName": {
+                    "description": "部门名称",
+                    "type": "string"
+                },
+                "deptSort": {
+                    "description": "显示排序",
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "leader": {
+                    "description": "负责人",
+                    "type": "string"
+                },
+                "parentId": {
+                    "description": "父部门ID",
+                    "type": "integer"
+                },
+                "phone": {
+                    "description": "联系电话",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "启用状态 0 启用 1 禁用",
+                    "type": "boolean"
                 }
             }
         },

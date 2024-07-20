@@ -26,8 +26,7 @@ func (api *MenuApi) Create(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	menuService := service.MenuService{}
-	if err := menuService.Create(&createMenuRequest); err != nil {
+	if err := service.MenuService.Create(&createMenuRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -50,8 +49,7 @@ func (api *MenuApi) Update(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	menuService := service.MenuService{}
-	if err := menuService.Update(&updateMenuRequest); err != nil {
+	if err := service.MenuService.Update(&updateMenuRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -72,8 +70,7 @@ func (api *MenuApi) Info(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	menuService := service.MenuService{}
-	user, err := menuService.FindOne(id)
+	user, err := service.MenuService.FindOne(id)
 	if err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
@@ -97,8 +94,7 @@ func (api *MenuApi) Page(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	menuService := service.MenuService{}
-	menus, total, err := menuService.Page(&menuListRequest)
+	menus, total, err := service.MenuService.Page(&menuListRequest)
 	if err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
@@ -120,8 +116,7 @@ func (api *MenuApi) Delete(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	menuService := service.MenuService{}
-	menu, err := menuService.FindOne(id)
+	menu, err := service.MenuService.FindOne(id)
 	if err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return

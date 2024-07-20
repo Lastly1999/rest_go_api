@@ -23,8 +23,7 @@ func JwtMiddleware(guardName string) gin.HandlerFunc {
 			return
 		}
 		token := tokenSplits[1]
-		jwtService := service.JwtService{}
-		Claims, err := jwtService.CheckToken([]byte(config.GlobalConfig.Jwt.SecretKey), token)
+		Claims, err := service.JwtService.CheckToken([]byte(config.GlobalConfig.Jwt.SecretKey), token)
 		if err != nil {
 			jsonResult.HttpResultAuthError("登录已超时，请重新登录！")
 			return

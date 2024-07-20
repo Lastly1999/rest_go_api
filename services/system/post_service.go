@@ -7,7 +7,9 @@ import (
 	"resetgoapi.com/rest_go_api/pkg/db/scopes"
 )
 
-type PostService struct{}
+var PostService = postService{}
+
+type postService struct{}
 
 type IPostService interface {
 	Page(request *request.PostListRequest) (*models.SysPost, int64, error)
@@ -18,12 +20,12 @@ type IPostService interface {
 	Find() ([]*models.SysPost, error)
 }
 
-func (p PostService) Page(request *request.PostListRequest) (posts *models.SysPost, total int64, err error) {
+func (p postService) Page(request *request.PostListRequest) (posts *models.SysPost, total int64, err error) {
 	err = global.GORM.Scopes(scopes.Paginate(&request.PageRequest)).Find(&posts).Count(&total).Error
 	return
 }
 
-func (p PostService) Create(request *request.CreatePostRequest) (err error) {
+func (p postService) Create(request *request.CreatePostRequest) (err error) {
 	err = global.GORM.Create(&models.SysPost{
 		PostCode: request.PostCode,
 		PostName: request.PostName,
@@ -34,7 +36,7 @@ func (p PostService) Create(request *request.CreatePostRequest) (err error) {
 	return
 }
 
-func (p PostService) Update(request *request.UpdatePostRequest) (err error) {
+func (p postService) Update(request *request.UpdatePostRequest) (err error) {
 	var post models.SysPost
 	err = global.GORM.Model(&post).Updates(&models.SysPost{
 		PostCode: request.PostCode,
@@ -46,17 +48,17 @@ func (p PostService) Update(request *request.UpdatePostRequest) (err error) {
 	return
 }
 
-func (p PostService) Delete(id int64) (err error) {
+func (p postService) Delete(id int64) (err error) {
 	err = global.GORM.Where("id = ?", id).Delete(&models.SysPost{}).Error
 	return
 }
 
-func (p PostService) FindOne(id int64) (post *models.SysPost, err error) {
+func (p postService) FindOne(id int64) (post *models.SysPost, err error) {
 	err = global.GORM.Where("id = ?", id).First(&post).Error
 	return
 }
 
-func (p PostService) Find() (posts []*models.SysPost, err error) {
+func (p postService) Find() (posts []*models.SysPost, err error) {
 	err = global.GORM.Find(&posts).Error
 	return
 }

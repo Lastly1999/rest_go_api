@@ -7,7 +7,9 @@ import (
 	"resetgoapi.com/rest_go_api/pkg/db/scopes"
 )
 
-type MenuService struct{}
+var MenuService = menuService{}
+
+type menuService struct{}
 
 type IMenuService interface {
 	Page(request *request.MenuListRequest) (*models.SysMenu, int64, error)
@@ -18,12 +20,12 @@ type IMenuService interface {
 	Find() ([]*models.SysMenu, error)
 }
 
-func (m MenuService) Page(request *request.MenuListRequest) (menus *models.SysMenu, total int64, err error) {
+func (m menuService) Page(request *request.MenuListRequest) (menus *models.SysMenu, total int64, err error) {
 	err = global.GORM.Scopes(scopes.Paginate(&request.PageRequest)).Find(&menus).Count(&total).Error
 	return
 }
 
-func (m MenuService) Create(request *request.CreateMenuRequest) (err error) {
+func (m menuService) Create(request *request.CreateMenuRequest) (err error) {
 	err = global.GORM.Create(&models.SysMenu{
 		MenuName:   request.MenuName,
 		MenuIcon:   request.MenuIcon,
@@ -43,7 +45,7 @@ func (m MenuService) Create(request *request.CreateMenuRequest) (err error) {
 	return
 }
 
-func (m MenuService) Update(request *request.UpdateMenuRequest) (err error) {
+func (m menuService) Update(request *request.UpdateMenuRequest) (err error) {
 	var menu models.SysMenu
 	menu.Id = request.Id
 	err = global.GORM.Model(&menu).Updates(&models.SysMenu{
@@ -65,17 +67,17 @@ func (m MenuService) Update(request *request.UpdateMenuRequest) (err error) {
 	return
 }
 
-func (m MenuService) Delete(id int64) (err error) {
+func (m menuService) Delete(id int64) (err error) {
 	err = global.GORM.Where("id = ?", id).Delete(&models.SysMenu{}).Error
 	return
 }
 
-func (m MenuService) FindOne(id int64) (menu *models.SysMenu, err error) {
+func (m menuService) FindOne(id int64) (menu *models.SysMenu, err error) {
 	err = global.GORM.Where("id = ?", id).First(&menu).Error
 	return
 }
 
-func (m MenuService) Find() (menus []*models.SysMenu, err error) {
+func (m menuService) Find() (menus []*models.SysMenu, err error) {
 	err = global.GORM.Find(&menus).Error
 	return
 }

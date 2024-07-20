@@ -9,7 +9,9 @@ import (
 	"time"
 )
 
-type JwtService struct {
+var JwtService = jwtService{}
+
+type jwtService struct {
 }
 
 type IJwtService interface {
@@ -19,7 +21,7 @@ type IJwtService interface {
 
 // CheckToken godoc
 // 验证token
-func (s *JwtService) CheckToken(key any, jwtStr string, options ...gojwt.ParserOption) (interface{}, error) {
+func (s *jwtService) CheckToken(key any, jwtStr string, options ...gojwt.ParserOption) (interface{}, error) {
 	mc := gojwt.MapClaims{}
 	token, err := gojwt.ParseWithClaims(jwtStr, mc, func(token *gojwt.Token) (interface{}, error) {
 		return key, nil
@@ -36,7 +38,7 @@ func (s *JwtService) CheckToken(key any, jwtStr string, options ...gojwt.ParserO
 
 // GetToken godoc
 // 派发token
-func (s *JwtService) GetToken(user *models.SysUser) string {
+func (s *jwtService) GetToken(user *models.SysUser) string {
 	claims := jwt.JWTClaims{
 		User: *user,
 		RegisteredClaims: gojwt.RegisteredClaims{
