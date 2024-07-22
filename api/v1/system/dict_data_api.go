@@ -37,7 +37,7 @@ func (api *DictDataApi) Create(ctx *gin.Context) {
 //
 //	@Summary	更新字典数据
 //	@Tags		数据字典数据
-//	@Param		request	body	request.updateDictDataRequest	true	"更新字典数据"
+//	@Param		request	body	request.UpdateDictDataRequest	true	"更新字典数据"
 //	@Accept		json
 //	@Produce	json
 //	@Success	200	{object}	result.HttpResult	"desc"

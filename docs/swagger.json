@@ -207,6 +207,360 @@
                 }
             }
         },
+        "/dictData/create": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "数据字典数据"
+                ],
+                "summary": "创建字典数据",
+                "parameters": [
+                    {
+                        "description": "创建字典数据",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateDictDataRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictData/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "数据字典数据"
+                ],
+                "summary": "删除字典数据",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "字典数据id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictData/info/{id}": {
+            "get": {
+                "tags": [
+                    "数据字典数据"
+                ],
+                "summary": "字典数据详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "字典数据id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictData/page": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "数据字典数据"
+                ],
+                "summary": "字典数据列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/result.HttpResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/response.PageResponse"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.SysDictData"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/dictData/update": {
+            "patch": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "数据字典数据"
+                ],
+                "summary": "更新字典数据",
+                "parameters": [
+                    {
+                        "description": "更新字典数据",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateDictDataRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictType/create": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "数据字典类型"
+                ],
+                "summary": "创建字典类型",
+                "parameters": [
+                    {
+                        "description": "创建字典类型",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateDictTypeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictType/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "数据字典类型"
+                ],
+                "summary": "删除字典类型",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "字典类型id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictType/info/{id}": {
+            "get": {
+                "tags": [
+                    "数据字典类型"
+                ],
+                "summary": "字典类型详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "字典类型id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictType/page": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "数据字典类型"
+                ],
+                "summary": "字典类型列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/result.HttpResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/response.PageResponse"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.SysDictType"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/dictType/update": {
+            "patch": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "数据字典类型"
+                ],
+                "summary": "更新字典类型",
+                "parameters": [
+                    {
+                        "description": "更新字典类型",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateDictTypeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "$ref": "#/definitions/result.HttpResult"
+                        }
+                    }
+                }
+            }
+        },
         "/login/sign": {
             "post": {
                 "tags": [
@@ -1035,6 +1389,80 @@
                 }
             }
         },
+        "models.SysDictData": {
+            "type": "object",
+            "properties": {
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "dictLabel": {
+                    "description": "字典标签",
+                    "type": "string"
+                },
+                "dictSort": {
+                    "description": "字典排序",
+                    "type": "integer"
+                },
+                "dictValue": {
+                    "description": "字典键值",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "启用状态 0 启用 1 禁用",
+                    "type": "boolean"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "models.SysDictType": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "dictName": {
+                    "description": "字典名称",
+                    "type": "string"
+                },
+                "dictType": {
+                    "description": "字典类型",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "启用状态 0 启用 1 禁用",
+                    "type": "boolean"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
         "models.SysMenu": {
             "type": "object",
             "properties": {
@@ -1280,6 +1708,56 @@
                 }
             }
         },
+        "request.CreateDictDataRequest": {
+            "type": "object",
+            "properties": {
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "dictLabel": {
+                    "description": "字典标签",
+                    "type": "string"
+                },
+                "dictSort": {
+                    "description": "字典排序",
+                    "type": "integer"
+                },
+                "dictValue": {
+                    "description": "字典键值",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "启用状态 0 启用 1 禁用",
+                    "type": "boolean"
+                }
+            }
+        },
+        "request.CreateDictTypeRequest": {
+            "type": "object",
+            "properties": {
+                "dictName": {
+                    "description": "字典名称",
+                    "type": "string"
+                },
+                "dictType": {
+                    "description": "字典类型",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "启用状态 0 启用 1 禁用",
+                    "type": "boolean"
+                }
+            }
+        },
         "request.CreateMenuRequest": {
             "type": "object",
             "properties": {
@@ -1491,6 +1969,62 @@
                 "phone": {
                     "description": "联系电话",
                     "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "启用状态 0 启用 1 禁用",
+                    "type": "boolean"
+                }
+            }
+        },
+        "request.UpdateDictDataRequest": {
+            "type": "object",
+            "properties": {
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "dictLabel": {
+                    "description": "字典标签",
+                    "type": "string"
+                },
+                "dictSort": {
+                    "description": "字典排序",
+                    "type": "integer"
+                },
+                "dictValue": {
+                    "description": "字典键值",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "启用状态 0 启用 1 禁用",
+                    "type": "boolean"
+                }
+            }
+        },
+        "request.UpdateDictTypeRequest": {
+            "type": "object",
+            "properties": {
+                "dictName": {
+                    "description": "字典名称",
+                    "type": "string"
+                },
+                "dictType": {
+                    "description": "字典类型",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "remark": {
                     "description": "备注",
