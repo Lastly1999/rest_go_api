@@ -7,7 +7,7 @@ type SysUser struct {
 	// 用户名
 	Username string `json:"username" form:"username"`
 	// 密码
-	Password string `json:"password" form:"password"`
+	Password string `json:"-" form:"password"`
 	// 邮箱
 	Email string `json:"email" form:"email"`
 	// 用户昵称

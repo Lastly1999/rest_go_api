@@ -12,7 +12,7 @@ var MenuService = menuService{}
 type menuService struct{}
 
 type IMenuService interface {
-	Page(request *request.MenuListRequest) (*models.SysMenu, int64, error)
+	Page(request *request.MenuListRequest) ([]*models.SysMenu, int64, error)
 	Create(request *request.CreateMenuRequest) error
 	Update(request *request.UpdateMenuRequest) error
 	Delete(id int64) error
@@ -20,7 +20,7 @@ type IMenuService interface {
 	Find() ([]*models.SysMenu, error)
 }
 
-func (m menuService) Page(request *request.MenuListRequest) (menus *models.SysMenu, total int64, err error) {
+func (m menuService) Page(request *request.MenuListRequest) (menus []*models.SysMenu, total int64, err error) {
 	err = global.GORM.Scopes(scopes.Paginate(&request.PageRequest)).Find(&menus).Count(&total).Error
 	return
 }

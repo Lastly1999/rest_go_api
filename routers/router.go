@@ -23,5 +23,7 @@ func InitRouter() *gin.Engine {
 	routes.RegisterRoleRoutes(authApi)
 	routes.RegisterMenuRoutes(authApi)
 	routes.RegisterDeptRoutes(authApi)
+	routes.RegisterDictDataRoutes(authApi)
+	routes.RegisterDictTypeRoutes(authApi)
 	return app
 }
