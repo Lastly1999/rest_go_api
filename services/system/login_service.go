@@ -3,23 +3,26 @@ package service
 import (
 	"errors"
 	request "resetgoapi.com/rest_go_api/common/request/system"
+	response "resetgoapi.com/rest_go_api/common/response/system"
 	models "resetgoapi.com/rest_go_api/models/system"
 	"resetgoapi.com/rest_go_api/utils/cypher"
 )
 
-type LoginService struct{}
+var LoginService = loginService{}
+
+type loginService struct{}
 
 type ILoginService interface {
-	Sign(sign *request.SignRequest) (*request.SignResponse, error)
+	Sign(sign *request.SignRequest) (*response.SignResponse, error)
+	GetUserInfo(userId int64) (*response.GetUserInfoResponse, error)
 }
 
-func (service *LoginService) Sign(sign *request.SignRequest) (*request.SignResponse, error) {
-	userService := UserService{}
+func (service *loginService) Sign(sign *request.SignRequest) (*response.SignResponse, error) {
 	user := &models.SysUser{
 		Username: sign.Username,
 	}
-	if err := userService.FindOneByUserName(user); err != nil {
-		return nil, err
+	if err := UserService.FindOneByUserName(user); err != nil {
+		return nil, errors.New("账号或者密码错误，请重新登录！")
 	}
 	if user == nil || !cypher.ComparePasswords(user.Password, sign.Password) {
 		return nil, errors.New("账号或者密码错误，请重新登录！")
@@ -28,7 +31,21 @@ func (service *LoginService) Sign(sign *request.SignRequest) (*request.SignRespo
 	if token == "" {
 		return nil, errors.New("token派发失败，请重试")
 	}
-	var resp request.SignResponse
+	var resp response.SignResponse
 	resp.AccessToken = token
 	return &resp, nil
+}
+
+func (service *loginService) GetUserInfo(userId int64) (*response.GetUserInfoResponse, error) {
+	userInfo, err := UserService.FindOne(userId)
+	if err != nil {
+		return nil, err
+	}
+	return &response.GetUserInfoResponse{
+		RealName: userInfo.NickName,
+		Username: userInfo.Username,
+		UserId:   userInfo.Id,
+		Avatar:   userInfo.Avatar,
+		Desc:     userInfo.Remark,
+	}, nil
 }

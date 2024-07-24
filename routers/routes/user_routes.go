@@ -14,5 +14,6 @@ func RegisterUserRoutes(route *gin.RouterGroup) {
 		userRoute.PATCH("/update", userApi.Update)
 		userRoute.GET("/info/:id", userApi.Info)
 		userRoute.DELETE("/delete/:id", userApi.Delete)
+		userRoute.GET("/getUserInfo", userApi.GetUserInfo)
 	}
 }

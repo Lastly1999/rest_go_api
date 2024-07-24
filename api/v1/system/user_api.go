@@ -3,6 +3,7 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	request "resetgoapi.com/rest_go_api/common/request/system"
+	"resetgoapi.com/rest_go_api/pkg/jwt"
 	service "resetgoapi.com/rest_go_api/services/system"
 	"resetgoapi.com/rest_go_api/utils/param"
 	"resetgoapi.com/rest_go_api/utils/result"
@@ -27,8 +28,7 @@ func (api *UserApi) Create(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	userService := service.UserService{}
-	if err := userService.Create(createUserRequest); err != nil {
+	if err := service.UserService.Create(createUserRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -51,8 +51,7 @@ func (api *UserApi) Update(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	userService := service.UserService{}
-	if err := userService.Update(updateUserRequest); err != nil {
+	if err := service.UserService.Update(updateUserRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -75,8 +74,7 @@ func (api *UserApi) Page(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	userService := service.UserService{}
-	list, total := userService.FindPage(userReq)
+	list, total := service.UserService.FindPage(userReq)
 	jsonResult.HttpResultSuccessPage(list, total)
 }
 
@@ -94,8 +92,7 @@ func (api *UserApi) Delete(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	userService := service.UserService{}
-	err = userService.Delete(id)
+	err = service.UserService.Delete(id)
 	if err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
@@ -117,11 +114,32 @@ func (api *UserApi) Info(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	userService := service.UserService{}
-	user, err := userService.FindOne(id)
+	user, err := service.UserService.FindOne(id)
 	if err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
 	jsonResult.HttpResultSuccess(user)
+}
+
+// GetUserInfo godoc
+//
+//	@Summary	获取用户信息
+//	@Tags		用户管理
+//	@Param		request	body		request.SignRequest								true	"用户信息"
+//	@success	200		{object}	result.HttpResult{data=response.GetUserInfoResponse}	"desc"
+//	@Router		/user/getUserInfo [get]
+func (api *UserApi) GetUserInfo(ctx *gin.Context) {
+	jsonResult := result.JsonResult{Context: ctx}
+	userId, err := jwt.GetUserID(ctx)
+	if err != nil {
+		jsonResult.HttpResultError(err.Error())
+		return
+	}
+	info, err := service.LoginService.GetUserInfo(userId)
+	if err != nil {
+		jsonResult.HttpResultError(err.Error())
+		return
+	}
+	jsonResult.HttpResultSuccess(info)
 }

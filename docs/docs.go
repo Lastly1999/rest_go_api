@@ -596,7 +596,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/request.SignResponse"
+                                            "$ref": "#/definitions/response.SignResponse"
                                         }
                                     }
                                 }
@@ -1217,6 +1217,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/getUserInfo": {
+            "get": {
+                "tags": [
+                    "用户管理"
+                ],
+                "summary": "获取用户信息",
+                "parameters": [
+                    {
+                        "description": "用户信息",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SignRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "desc",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/result.HttpResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.GetUserInfoResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/user/info/{id}": {
             "get": {
                 "tags": [
@@ -1655,10 +1694,6 @@ const docTemplate = `{
                     "description": "用户昵称",
                     "type": "string"
                 },
-                "password": {
-                    "description": "密码",
-                    "type": "string"
-                },
                 "phone": {
                     "description": "手机号",
                     "type": "string"
@@ -1939,17 +1974,6 @@ const docTemplate = `{
                 }
             }
         },
-        "request.SignResponse": {
-            "type": "object",
-            "properties": {
-                "accessToken": {
-                    "type": "string"
-                },
-                "expiresIn": {
-                    "type": "integer"
-                }
-            }
-        },
         "request.UpdateDeptRequest": {
             "type": "object",
             "properties": {
@@ -2186,11 +2210,48 @@ const docTemplate = `{
                 }
             }
         },
+        "response.GetUserInfoResponse": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "realName": {
+                    "type": "string"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "userId": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
         "response.PageResponse": {
             "type": "object",
             "properties": {
                 "list": {},
                 "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.SignResponse": {
+            "type": "object",
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "expiresIn": {
                     "type": "integer"
                 }
             }

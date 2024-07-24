@@ -8,7 +8,9 @@ import (
 	"resetgoapi.com/rest_go_api/utils/cypher"
 )
 
-type UserService struct{}
+var UserService = userService{}
+
+type userService struct{}
 
 type IUserService interface {
 	Create(req *request.CreateUserRequest) error
@@ -19,17 +21,17 @@ type IUserService interface {
 	FindOneByUserName(user *models.SysUser) error
 }
 
-func (u *UserService) Delete(id int64) (err error) {
+func (u *userService) Delete(id int64) (err error) {
 	err = global.GORM.Where("id = ?", id).Delete(&models.SysUser{}).Error
 	return
 }
 
-func (u *UserService) FindOne(id int64) (user *models.SysUser, err error) {
+func (u *userService) FindOne(id int64) (user *models.SysUser, err error) {
 	err = global.GORM.Where("id = ?", id).First(&user).Error
 	return
 }
 
-func (u *UserService) Update(req *request.UpdateUserRequest) error {
+func (u *userService) Update(req *request.UpdateUserRequest) error {
 	var user models.SysUser
 	user.Id = req.Id
 	if err := global.GORM.Model(&user).Updates(&models.SysUser{
@@ -49,7 +51,7 @@ func (u *UserService) Update(req *request.UpdateUserRequest) error {
 	return nil
 }
 
-func (u *UserService) Create(req *request.CreateUserRequest) error {
+func (u *userService) Create(req *request.CreateUserRequest) error {
 	password, _ := cypher.HashPassword("1234")
 	if err := global.GORM.Create(&models.SysUser{
 		Password: password,
@@ -69,12 +71,12 @@ func (u *UserService) Create(req *request.CreateUserRequest) error {
 	return nil
 }
 
-func (u *UserService) FindPage(request *request.UserRequest) (users []*models.SysUser, total int64) {
+func (u *userService) FindPage(request *request.UserRequest) (users []*models.SysUser, total int64) {
 	global.GORM.Scopes(scopes.Paginate(&request.PageRequest)).Find(&users).Count(&total)
 	return
 }
 
-func (u *UserService) FindOneByUserName(user *models.SysUser) (err error) {
+func (u *userService) FindOneByUserName(user *models.SysUser) (err error) {
 	err = global.GORM.Where("username = ?", &user.Username).First(&user).Error
 	return
 }

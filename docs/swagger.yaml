@@ -224,9 +224,6 @@ definitions:
       nickName:
         description: 用户昵称
         type: string
-      password:
-        description: 密码
-        type: string
       phone:
         description: 手机号
         type: string
@@ -430,13 +427,6 @@ definitions:
     - password
     - username
     type: object
-  request.SignResponse:
-    properties:
-      accessToken:
-        type: string
-      expiresIn:
-        type: integer
-    type: object
   request.UpdateDeptRequest:
     properties:
       deptName:
@@ -608,10 +598,34 @@ definitions:
         description: 用户名
         type: string
     type: object
+  response.GetUserInfoResponse:
+    properties:
+      avatar:
+        type: string
+      desc:
+        type: string
+      realName:
+        type: string
+      roles:
+        items:
+          type: string
+        type: array
+      userId:
+        type: integer
+      username:
+        type: string
+    type: object
   response.PageResponse:
     properties:
       list: {}
       total:
+        type: integer
+    type: object
+  response.SignResponse:
+    properties:
+      accessToken:
+        type: string
+      expiresIn:
         type: integer
     type: object
   result.HttpResult:
@@ -979,7 +993,7 @@ paths:
             - $ref: '#/definitions/result.HttpResult'
             - properties:
                 data:
-                  $ref: '#/definitions/request.SignResponse'
+                  $ref: '#/definitions/response.SignResponse'
               type: object
       summary: 用户登录
       tags:
@@ -1349,6 +1363,28 @@ paths:
           schema:
             $ref: '#/definitions/result.HttpResult'
       summary: 删除用户
+      tags:
+      - 用户管理
+  /user/getUserInfo:
+    get:
+      parameters:
+      - description: 用户信息
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.SignRequest'
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/result.HttpResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.GetUserInfoResponse'
+              type: object
+      summary: 获取用户信息
       tags:
       - 用户管理
   /user/info/{id}:

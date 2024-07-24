@@ -15,25 +15,21 @@ type jwtService struct {
 }
 
 type IJwtService interface {
-	CheckToken(key any, jwtStr string, options ...gojwt.ParserOption) (interface{}, error)
+	CheckToken(key any, jwtStr string) (*jwt.JWTClaims, error)
 	GetToken(user *models.SysUser) string
 }
 
 // CheckToken godoc
 // 验证token
-func (s *jwtService) CheckToken(key any, jwtStr string, options ...gojwt.ParserOption) (interface{}, error) {
-	mc := gojwt.MapClaims{}
-	token, err := gojwt.ParseWithClaims(jwtStr, mc, func(token *gojwt.Token) (interface{}, error) {
+func (s *jwtService) CheckToken(key any, jwtStr string) (*jwt.JWTClaims, error) {
+	token, err := gojwt.ParseWithClaims(jwtStr, &jwt.JWTClaims{}, func(token *gojwt.Token) (interface{}, error) {
 		return key, nil
-	}, options...)
-	if err != nil {
-		return nil, err
-	}
-	// 校验 Claims 对象是否有效，基于 exp（过期时间），nbf（不早于），iat（签发时间）等进行判断（如果有这些声明的话）。
-	if !token.Valid {
+	})
+	claims, ok := token.Claims.(*jwt.JWTClaims)
+	if !ok || !token.Valid {
 		return nil, errors.New("invalid token")
 	}
-	return token.Claims, nil
+	return claims, err
 }
 
 // GetToken godoc
