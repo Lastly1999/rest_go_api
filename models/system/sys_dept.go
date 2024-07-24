@@ -15,7 +15,7 @@ type SysDept struct {
 	// 联系电话
 	Phone string `json:"phone" form:"phone"`
 	// 启用状态 0 启用 1 禁用
-	Status int `json:"status" form:"status"`
+	Status *int `json:"status" form:"status"`
 	// 备注
 	Remark string `json:"remark" form:"remark"`
 }

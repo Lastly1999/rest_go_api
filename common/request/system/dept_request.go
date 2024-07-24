@@ -4,7 +4,7 @@ type CreateDeptRequest struct {
 	// 部门名称
 	DeptName string `json:"deptName" form:"deptName"`
 	// 父部门ID
-	ParentId int64 `json:"parentId" form:"parentId"`
+	ParentId *int64 `json:"parentId" form:"parentId"`
 	// 显示排序
 	DeptSort int64 `json:"deptSort" form:"deptSort"`
 	// 负责人
@@ -21,7 +21,7 @@ type UpdateDeptRequest struct {
 	// 部门名称
 	DeptName string `json:"deptName" form:"deptName"`
 	// 父部门ID
-	ParentId int64 `json:"parentId" form:"parentId"`
+	ParentId *int64 `json:"parentId" form:"parentId"`
 	// 显示排序
 	DeptSort int64 `json:"deptSort" form:"deptSort"`
 	// 负责人
@@ -29,7 +29,7 @@ type UpdateDeptRequest struct {
 	// 联系电话
 	Phone string `json:"phone" form:"phone"`
 	// 启用状态 0 启用 1 禁用
-	Status int `json:"status" form:"status"`
+	Status *int `json:"status" form:"status"`
 	// 备注
 	Remark string `json:"remark" form:"remark"`
 }

@@ -38,12 +38,12 @@ func (d deptService) Page(request *request.DeptListRequest) (depts []*models.Sys
 func (d deptService) Create(request *request.CreateDeptRequest) (err error) {
 	err = global.GORM.Create(&models.SysDept{
 		DeptName: request.DeptName,
-		ParentId: request.ParentId,
+		ParentId: *request.ParentId,
 		DeptSort: request.DeptSort,
 		Remark:   request.Remark,
 		Leader:   request.Leader,
 		Phone:    request.Phone,
-		Status:   request.Status,
+		Status:   &request.Status,
 	}).Error
 	return
 }
@@ -52,12 +52,13 @@ func (d deptService) Update(request *request.UpdateDeptRequest) (err error) {
 	var menu models.SysDept
 	menu.Id = request.Id
 	err = global.GORM.Model(&menu).Updates(&models.SysDept{
-		ParentId: request.ParentId,
+		ParentId: *request.ParentId,
 		DeptSort: request.DeptSort,
 		Remark:   request.Remark,
 		Leader:   request.Leader,
 		Phone:    request.Phone,
 		Status:   request.Status,
+		DeptName: request.DeptName,
 	}).Error
 	return
 }
