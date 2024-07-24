@@ -133,13 +133,15 @@ const docTemplate = `{
                 "summary": "部门列表",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "name": "page",
+                        "type": "string",
+                        "description": "部门名称",
+                        "name": "deptName",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "name": "size",
+                        "description": "启用状态 0 启用 1 禁用",
+                        "name": "status",
                         "in": "query"
                     }
                 ],
@@ -1426,7 +1428,7 @@ const docTemplate = `{
                 },
                 "status": {
                     "description": "启用状态 0 启用 1 禁用",
-                    "type": "boolean"
+                    "type": "integer"
                 },
                 "updatedAt": {
                     "description": "更新时间",
@@ -1745,7 +1747,7 @@ const docTemplate = `{
                 },
                 "status": {
                     "description": "启用状态 0 启用 1 禁用",
-                    "type": "boolean"
+                    "type": "integer"
                 }
             }
         },
@@ -2006,7 +2008,7 @@ const docTemplate = `{
                 },
                 "status": {
                     "description": "启用状态 0 启用 1 禁用",
-                    "type": "boolean"
+                    "type": "integer"
                 }
             }
         },

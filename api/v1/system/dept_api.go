@@ -3,6 +3,7 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	request "resetgoapi.com/rest_go_api/common/request/system"
+	models "resetgoapi.com/rest_go_api/models/system"
 	service "resetgoapi.com/rest_go_api/services/system"
 	"resetgoapi.com/rest_go_api/utils/param"
 	"resetgoapi.com/rest_go_api/utils/result"
@@ -12,7 +13,7 @@ type DeptApi struct{}
 
 // Page godoc
 //
-//	@Summary	部门列表
+//	@Summary	部门列表分页
 //	@Tags		部门管理
 //	@Accept		json
 //	@Produce	json
@@ -22,16 +23,36 @@ type DeptApi struct{}
 func (api *DeptApi) Page(ctx *gin.Context) {
 	jsonResult := result.JsonResult{Context: ctx}
 	deptListRequest := request.DeptListRequest{}
-	if err := ctx.ShouldBindJSON(&deptListRequest); err != nil {
+	if err := ctx.ShouldBind(&deptListRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	posts, total, err := service.DeptService.Page(&deptListRequest)
+	depts, err := service.DeptService.Page(&deptListRequest)
 	if err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	jsonResult.HttpResultSuccessPage(posts, total)
+	treeDepts := models.BuildDeptTree(depts)
+	jsonResult.HttpResultSuccess(treeDepts)
+}
+
+// List godoc
+//
+//	@Summary	部门列表
+//	@Tags		部门管理
+//	@Accept		json
+//	@Produce	json
+//	@Param		DeptListRequest	query		request.DeptListRequest														false	"查询参数"
+//	@Success	200			{object}	result.HttpResult{data=response.PageResponse{list=[]models.SysDept}}	"desc"
+//	@Router		/dept/page [get]
+func (api *DeptApi) List(ctx *gin.Context) {
+	jsonResult := result.JsonResult{Context: ctx}
+	list, err := service.DeptService.List()
+	if err != nil {
+		jsonResult.HttpResultError(err.Error())
+		return
+	}
+	jsonResult.HttpResultSuccess(list)
 }
 
 // Create godoc

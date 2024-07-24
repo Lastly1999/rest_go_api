@@ -28,7 +28,7 @@ definitions:
         type: string
       status:
         description: 启用状态 0 启用 1 禁用
-        type: boolean
+        type: integer
       updatedAt:
         description: 更新时间
         type: string
@@ -262,7 +262,7 @@ definitions:
         type: string
       status:
         description: 启用状态 0 启用 1 禁用
-        type: boolean
+        type: integer
     type: object
   request.CreateDictDataRequest:
     properties:
@@ -451,7 +451,7 @@ definitions:
         type: string
       status:
         description: 启用状态 0 启用 1 禁用
-        type: boolean
+        type: integer
     type: object
   request.UpdateDictDataRequest:
     properties:
@@ -713,11 +713,13 @@ paths:
       consumes:
       - application/json
       parameters:
-      - in: query
-        name: page
-        type: integer
-      - in: query
-        name: size
+      - description: 部门名称
+        in: query
+        name: deptName
+        type: string
+      - description: 启用状态 0 启用 1 禁用
+        in: query
+        name: status
         type: integer
       produces:
       - application/json

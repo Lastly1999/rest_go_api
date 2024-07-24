@@ -13,6 +13,7 @@ func RegisterDeptRoutes(route *gin.RouterGroup) {
 		deptRoute.POST("/create", deptApi.Create)
 		deptRoute.PATCH("/update", deptApi.Update)
 		deptRoute.GET("/page", deptApi.Page)
+		deptRoute.GET("/list", deptApi.List)
 		deptRoute.DELETE("/delete/:id", deptApi.Delete)
 	}
 }

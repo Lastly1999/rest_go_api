@@ -4,7 +4,6 @@ import (
 	request "resetgoapi.com/rest_go_api/common/request/system"
 	"resetgoapi.com/rest_go_api/global"
 	models "resetgoapi.com/rest_go_api/models/system"
-	"resetgoapi.com/rest_go_api/pkg/db/scopes"
 )
 
 var DeptService = deptService{}
@@ -12,7 +11,8 @@ var DeptService = deptService{}
 type deptService struct{}
 
 type IDeptService interface {
-	Page(request *request.DeptListRequest) (*models.SysDept, int64, error)
+	List() ([]*models.SysDept, error)
+	Page(request *request.DeptListRequest) ([]*models.SysDept, error)
 	Create(request *request.CreateDeptRequest) error
 	Update(request *request.UpdateDeptRequest) error
 	Delete(id int64) error
@@ -20,13 +20,24 @@ type IDeptService interface {
 	Find() ([]*models.SysDept, error)
 }
 
-func (d deptService) Page(request *request.DeptListRequest) (menus *models.SysDept, total int64, err error) {
-	err = global.GORM.Scopes(scopes.Paginate(&request.PageRequest)).Find(&menus).Count(&total).Error
+func (d deptService) List() (depts []*models.SysDept, err error) {
+	err = global.GORM.Find(&depts).Error
+	return
+}
+
+func (d deptService) Page(request *request.DeptListRequest) (depts []*models.SysDept, err error) {
+	orm := global.GORM
+	if request.Status != nil {
+		orm = orm.Where("status = ?", request.Status)
+	}
+	orm = orm.Where("dept_name LIKE ?", "%"+request.DeptName+"%")
+	err = orm.Find(&depts).Error
 	return
 }
 
 func (d deptService) Create(request *request.CreateDeptRequest) (err error) {
 	err = global.GORM.Create(&models.SysDept{
+		DeptName: request.DeptName,
 		ParentId: request.ParentId,
 		DeptSort: request.DeptSort,
 		Remark:   request.Remark,
