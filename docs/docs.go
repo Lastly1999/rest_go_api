@@ -2286,7 +2286,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8000",
 	BasePath:         "/v1",
 	Schemes:          []string{},
-	Title:            "rest_go_api",
+	Title:            "go-admin-api",
 	Description:      "This is a sample server celler server.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

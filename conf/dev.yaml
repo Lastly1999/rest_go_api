@@ -16,5 +16,5 @@ database:
 jwt:
   secretkey: !lsldalsdlasdlasldlasldasdasdsadsda
   expiresIn: 36000
-  isuser: rest_go_api
+  isuser: go-admin-api
   headerKey: Authorization

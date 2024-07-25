@@ -4,7 +4,7 @@ import (
 	"resetgoapi.com/rest_go_api/cmd"
 )
 
-// @title						rest_go_api
+// @title						go-admin-api
 // @version					1.0
 // @description				This is a sample server celler server.
 // @termsOfService				http://swagger.io/terms/
