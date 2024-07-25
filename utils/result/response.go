@@ -3,7 +3,7 @@ package result
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"resetgoapi.com/rest_go_api/common/response"
+	"resetgoapi.com/go-admin-api/common/response"
 )
 
 type HttpResult struct {

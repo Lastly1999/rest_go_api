@@ -1,7 +1,7 @@
 package main
 
 import (
-	"resetgoapi.com/rest_go_api/cmd"
+	"resetgoapi.com/go-admin-api/cmd"
 )
 
 // @title						go-admin-api

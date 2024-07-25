@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/spf13/viper"
-	"resetgoapi.com/rest_go_api/global"
+	"resetgoapi.com/go-admin-api/global"
 )
 
 var GlobalConfig *AppConfig

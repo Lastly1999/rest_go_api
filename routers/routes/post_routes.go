@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	v1 "resetgoapi.com/rest_go_api/api/v1/system"
+	v1 "resetgoapi.com/go-admin-api/api/v1/system"
 )
 
 func RegisterPostRoutes(route *gin.RouterGroup) {

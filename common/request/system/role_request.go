@@ -1,6 +1,6 @@
 package request
 
-import "resetgoapi.com/rest_go_api/common/request"
+import "resetgoapi.com/go-admin-api/common/request"
 
 type RoleListRequest struct {
 	request.PageRequest

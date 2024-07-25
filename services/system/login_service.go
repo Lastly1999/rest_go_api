@@ -2,10 +2,10 @@ package service
 
 import (
 	"errors"
-	request "resetgoapi.com/rest_go_api/common/request/system"
-	response "resetgoapi.com/rest_go_api/common/response/system"
-	models "resetgoapi.com/rest_go_api/models/system"
-	"resetgoapi.com/rest_go_api/utils/cypher"
+	request "resetgoapi.com/go-admin-api/common/request/system"
+	response "resetgoapi.com/go-admin-api/common/response/system"
+	models "resetgoapi.com/go-admin-api/models/system"
+	"resetgoapi.com/go-admin-api/utils/cypher"
 )
 
 var LoginService = loginService{}

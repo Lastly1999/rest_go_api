@@ -1,7 +1,7 @@
 package test
 
 import (
-	"resetgoapi.com/rest_go_api/utils/cypher"
+	"resetgoapi.com/go-admin-api/utils/cypher"
 	"testing"
 )
 

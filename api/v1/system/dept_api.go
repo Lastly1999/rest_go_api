@@ -2,11 +2,11 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	request "resetgoapi.com/rest_go_api/common/request/system"
-	models "resetgoapi.com/rest_go_api/models/system"
-	service "resetgoapi.com/rest_go_api/services/system"
-	"resetgoapi.com/rest_go_api/utils/param"
-	"resetgoapi.com/rest_go_api/utils/result"
+	request "resetgoapi.com/go-admin-api/common/request/system"
+	models "resetgoapi.com/go-admin-api/models/system"
+	service "resetgoapi.com/go-admin-api/services/system"
+	"resetgoapi.com/go-admin-api/utils/param"
+	"resetgoapi.com/go-admin-api/utils/result"
 )
 
 type DeptApi struct{}

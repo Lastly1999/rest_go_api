@@ -2,9 +2,9 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"resetgoapi.com/rest_go_api/pkg/config"
-	service "resetgoapi.com/rest_go_api/services/system"
-	"resetgoapi.com/rest_go_api/utils/result"
+	"resetgoapi.com/go-admin-api/pkg/config"
+	service "resetgoapi.com/go-admin-api/services/system"
+	"resetgoapi.com/go-admin-api/utils/result"
 	"strings"
 )
 

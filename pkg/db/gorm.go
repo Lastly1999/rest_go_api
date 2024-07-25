@@ -6,8 +6,8 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
-	"resetgoapi.com/rest_go_api/global"
-	"resetgoapi.com/rest_go_api/pkg/config"
+	"resetgoapi.com/go-admin-api/global"
+	"resetgoapi.com/go-admin-api/pkg/config"
 )
 
 func Setup() {

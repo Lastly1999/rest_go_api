@@ -1,6 +1,6 @@
 package response
 
-import models "resetgoapi.com/rest_go_api/models/system"
+import models "resetgoapi.com/go-admin-api/models/system"
 
 type GetUserInfoResponse struct {
 	Roles    []string `json:"roles"`

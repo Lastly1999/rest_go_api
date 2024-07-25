@@ -3,8 +3,8 @@ package cache
 import (
 	"context"
 	"github.com/redis/go-redis/v9"
-	"resetgoapi.com/rest_go_api/global"
-	"resetgoapi.com/rest_go_api/pkg/config"
+	"resetgoapi.com/go-admin-api/global"
+	"resetgoapi.com/go-admin-api/pkg/config"
 )
 
 func Setup() {

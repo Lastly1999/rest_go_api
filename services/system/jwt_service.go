@@ -3,9 +3,9 @@ package service
 import (
 	"errors"
 	gojwt "github.com/golang-jwt/jwt/v5"
-	models "resetgoapi.com/rest_go_api/models/system"
-	"resetgoapi.com/rest_go_api/pkg/config"
-	"resetgoapi.com/rest_go_api/pkg/jwt"
+	models "resetgoapi.com/go-admin-api/models/system"
+	"resetgoapi.com/go-admin-api/pkg/config"
+	"resetgoapi.com/go-admin-api/pkg/jwt"
 	"time"
 )
 

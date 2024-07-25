@@ -1,9 +1,9 @@
 package service
 
 import (
-	request "resetgoapi.com/rest_go_api/common/request/system"
-	"resetgoapi.com/rest_go_api/global"
-	models "resetgoapi.com/rest_go_api/models/system"
+	request "resetgoapi.com/go-admin-api/common/request/system"
+	"resetgoapi.com/go-admin-api/global"
+	models "resetgoapi.com/go-admin-api/models/system"
 )
 
 var DeptService = deptService{}

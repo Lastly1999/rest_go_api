@@ -1,7 +1,7 @@
 package models
 
 import (
-	"resetgoapi.com/rest_go_api/models"
+	"resetgoapi.com/go-admin-api/models"
 )
 
 type SysDictType struct {

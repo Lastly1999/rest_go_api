@@ -2,7 +2,7 @@ package scopes
 
 import (
 	"gorm.io/gorm"
-	"resetgoapi.com/rest_go_api/common/request"
+	"resetgoapi.com/go-admin-api/common/request"
 )
 
 func Paginate(req *request.PageRequest) func(db *gorm.DB) *gorm.DB {

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
-	models "resetgoapi.com/rest_go_api/models/system"
+	models "resetgoapi.com/go-admin-api/models/system"
 )
 
 type JWTClaims struct {

@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"resetgoapi.com/rest_go_api/pkg/cache"
-	"resetgoapi.com/rest_go_api/pkg/config"
-	"resetgoapi.com/rest_go_api/pkg/db"
-	"resetgoapi.com/rest_go_api/pkg/logger"
-	"resetgoapi.com/rest_go_api/routers"
+	"resetgoapi.com/go-admin-api/pkg/cache"
+	"resetgoapi.com/go-admin-api/pkg/config"
+	"resetgoapi.com/go-admin-api/pkg/db"
+	"resetgoapi.com/go-admin-api/pkg/logger"
+	"resetgoapi.com/go-admin-api/routers"
 )
 
 func Start() {

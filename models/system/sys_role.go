@@ -1,6 +1,6 @@
 package models
 
-import "resetgoapi.com/rest_go_api/models"
+import "resetgoapi.com/go-admin-api/models"
 
 type SysRole struct {
 	models.BaseModel

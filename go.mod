@@ -1,4 +1,4 @@
-module resetgoapi.com/rest_go_api
+module resetgoapi.com/go-admin-api
 
 go 1.22.5
 

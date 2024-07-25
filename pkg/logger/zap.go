@@ -3,7 +3,7 @@ package logger
 import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"resetgoapi.com/rest_go_api/global"
+	"resetgoapi.com/go-admin-api/global"
 )
 
 func Setup() {

@@ -1,8 +1,8 @@
 package service
 
 import (
-	"resetgoapi.com/rest_go_api/global"
-	models "resetgoapi.com/rest_go_api/models/system"
+	"resetgoapi.com/go-admin-api/global"
+	models "resetgoapi.com/go-admin-api/models/system"
 )
 
 var RoleMenuService = roleMenuService{}

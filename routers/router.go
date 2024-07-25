@@ -4,10 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	_ "resetgoapi.com/rest_go_api/docs"
-	"resetgoapi.com/rest_go_api/middleware"
-	"resetgoapi.com/rest_go_api/pkg/config"
-	"resetgoapi.com/rest_go_api/routers/routes"
+	_ "resetgoapi.com/go-admin-api/docs"
+	"resetgoapi.com/go-admin-api/middleware"
+	"resetgoapi.com/go-admin-api/pkg/config"
+	"resetgoapi.com/go-admin-api/routers/routes"
 )
 
 func InitRouter() *gin.Engine {
