@@ -14,7 +14,7 @@ type CreateRoleRequest struct {
 	// 角色排序
 	RoleSort int64 `json:"roleSort" form:"roleSort"`
 	// 启用状态 0 启用 1 禁用
-	Status bool `json:"status" form:"status"`
+	Status *int `json:"status" form:"status"`
 	// 备注
 	Remark string `json:"remark" form:"remark"`
 }
@@ -28,7 +28,7 @@ type UpdateRoleRequest struct {
 	// 角色排序
 	RoleSort int64 `json:"roleSort" form:"roleSort"`
 	// 启用状态 0 启用 1 禁用
-	Status bool `json:"status" form:"status"`
+	Status *int `json:"status" form:"status"`
 	// 备注
 	Remark string `json:"remark" form:"remark"`
 }

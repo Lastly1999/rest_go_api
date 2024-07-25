@@ -1058,17 +1058,10 @@ paths:
       summary: 菜单详情
       tags:
       - 菜单管理
-  /menu/page:
+  /menu/list:
     get:
       consumes:
       - application/json
-      parameters:
-      - in: query
-        name: page
-        type: integer
-      - in: query
-        name: size
-        type: integer
       produces:
       - application/json
       responses:
@@ -1089,6 +1082,32 @@ paths:
                     type: object
               type: object
       summary: 菜单列表
+      tags:
+      - 菜单管理
+  /menu/page:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/result.HttpResult'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/response.PageResponse'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.SysMenu'
+                        type: array
+                    type: object
+              type: object
+      summary: 菜单列表分页
       tags:
       - 菜单管理
   /menu/update:

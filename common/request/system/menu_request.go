@@ -16,9 +16,9 @@ type CreateMenuRequest struct {
 	// 显示排序
 	MenuSort int64 `json:"menuSort" form:"menuSort"`
 	// 菜单类型 0目录 1菜单 2按钮
-	MenuType bool `json:"menuType" form:"menuType"`
+	MenuType int `json:"menuType" form:"menuType"`
 	// 菜单状态 0显示 1隐藏
-	Visible bool `json:"visible" form:"visible"`
+	Visible int `json:"visible" form:"visible"`
 	// 权限标识
 	Perms string `json:"perms" form:"perms"`
 	// 菜单图标
@@ -26,9 +26,9 @@ type CreateMenuRequest struct {
 	// 备注
 	Remark string `json:"remark" form:"remark"`
 	// 是否缓存 0缓存 1不缓存
-	IsCache bool `json:"isCache" form:"isCache"`
+	IsCache int `json:"isCache" form:"isCache"`
 	// 是否外链 0是 1否
-	IsFrame bool `json:"isFrame" form:"isFrame"`
+	IsFrame int `json:"isFrame" form:"isFrame"`
 	// 组件路径
 	Component string `json:"component" form:"component"`
 	// 路由地址
@@ -36,7 +36,7 @@ type CreateMenuRequest struct {
 	// 路由参数
 	Query string `json:"query" form:"query"`
 	// 菜单状态 0正常 1停用
-	Status bool `json:"status" form:"status"`
+	Status int `json:"status" form:"status"`
 }
 
 type UpdateMenuRequest struct {
@@ -50,9 +50,9 @@ type UpdateMenuRequest struct {
 	// 显示排序
 	MenuSort int64 `json:"menuSort" form:"menuSort"`
 	// 菜单类型 0目录 1菜单 2按钮
-	MenuType bool `json:"menuType" form:"menuType"`
+	MenuType int `json:"menuType" form:"menuType"`
 	// 菜单状态 0显示 1隐藏
-	Visible bool `json:"visible" form:"visible"`
+	Visible int `json:"visible" form:"visible"`
 	// 权限标识
 	Perms string `json:"perms" form:"perms"`
 	// 菜单图标
@@ -60,9 +60,9 @@ type UpdateMenuRequest struct {
 	// 备注
 	Remark string `json:"remark" form:"remark"`
 	// 是否缓存 0缓存 1不缓存
-	IsCache bool `json:"isCache" form:"isCache"`
+	IsCache int `json:"isCache" form:"isCache"`
 	// 是否外链 0是 1否
-	IsFrame bool `json:"isFrame" form:"isFrame"`
+	IsFrame int `json:"isFrame" form:"isFrame"`
 	// 组件路径
 	Component string `json:"component" form:"component"`
 	// 路由地址
@@ -70,5 +70,5 @@ type UpdateMenuRequest struct {
 	// 路由参数
 	Query string `json:"query" form:"query"`
 	// 菜单状态 0正常 1停用
-	Status bool `json:"status" form:"status"`
+	Status int `json:"status" form:"status"`
 }

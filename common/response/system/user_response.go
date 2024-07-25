@@ -1,5 +1,7 @@
 package response
 
+import models "resetgoapi.com/rest_go_api/models/system"
+
 type GetUserInfoResponse struct {
 	Roles    []string `json:"roles"`
 	UserId   int64    `json:"userId"`
@@ -7,4 +9,9 @@ type GetUserInfoResponse struct {
 	RealName string   `json:"realName"`
 	Avatar   string   `json:"avatar"`
 	Desc     string   `json:"desc"`
+}
+
+type SysUserPageListResponse struct {
+	Role []string `json:"role"`
+	models.SysUser
 }
