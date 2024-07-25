@@ -3,6 +3,7 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	request "resetgoapi.com/rest_go_api/common/request/system"
+	models "resetgoapi.com/rest_go_api/models/system"
 	service "resetgoapi.com/rest_go_api/services/system"
 	"resetgoapi.com/rest_go_api/utils/param"
 	"resetgoapi.com/rest_go_api/utils/result"
@@ -21,12 +22,12 @@ type MenuApi struct{}
 //	@Router		/menu/create [post]
 func (api *MenuApi) Create(ctx *gin.Context) {
 	jsonResult := result.JsonResult{Context: ctx}
-	createMenuRequest := request.CreateMenuRequest{}
+	createMenuRequest := &request.CreateMenuRequest{}
 	if err := ctx.ShouldBindJSON(&createMenuRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	if err := service.MenuService.Create(&createMenuRequest); err != nil {
+	if err := service.MenuService.Create(createMenuRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -80,11 +81,10 @@ func (api *MenuApi) Info(ctx *gin.Context) {
 
 // Page godoc
 //
-//	@Summary	菜单列表
+//	@Summary	菜单列表分页
 //	@Tags		菜单管理
 //	@Accept		json
 //	@Produce	json
-//	@Param		userRequest	query		request.UserRequest														false	"查询参数"
 //	@Success	200			{object}	result.HttpResult{data=response.PageResponse{list=[]models.SysMenu}}	"desc"
 //	@Router		/menu/page [get]
 func (api *MenuApi) Page(ctx *gin.Context) {
@@ -100,6 +100,25 @@ func (api *MenuApi) Page(ctx *gin.Context) {
 		return
 	}
 	jsonResult.HttpResultSuccessPage(menus, total)
+}
+
+// List godoc
+//
+//	@Summary	菜单列表
+//	@Tags		菜单管理
+//	@Accept		json
+//	@Produce	json
+//	@Success	200			{object}	result.HttpResult{data=response.PageResponse{list=[]models.SysMenu}}	"desc"
+//	@Router		/menu/list [get]
+func (api *MenuApi) List(ctx *gin.Context) {
+	jsonResult := result.JsonResult{Context: ctx}
+	menus, err := service.MenuService.Find()
+	if err != nil {
+		jsonResult.HttpResultError(err.Error())
+		return
+	}
+	treeMenus := models.BuildMenuTree(menus)
+	jsonResult.HttpResultSuccess(treeMenus)
 }
 
 // Delete godoc

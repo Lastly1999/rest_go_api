@@ -2,6 +2,7 @@ package service
 
 import (
 	request "resetgoapi.com/rest_go_api/common/request/system"
+	response "resetgoapi.com/rest_go_api/common/response/system"
 	"resetgoapi.com/rest_go_api/global"
 	models "resetgoapi.com/rest_go_api/models/system"
 	"resetgoapi.com/rest_go_api/pkg/db/scopes"
@@ -71,9 +72,24 @@ func (u *userService) Create(req *request.CreateUserRequest) error {
 	return nil
 }
 
-func (u *userService) FindPage(request *request.UserRequest) (users []*models.SysUser, total int64) {
+func (u *userService) FindPage(request *request.UserRequest) ([]*response.SysUserPageListResponse, int64) {
+	var users []*models.SysUser
+	var total int64
 	global.GORM.Scopes(scopes.Paginate(&request.PageRequest)).Find(&users).Count(&total)
-	return
+	var pageList []*response.SysUserPageListResponse
+	for _, user := range users {
+		ids, _ := UserRoleService.FindRoleIdsByUserId(user.Id)
+		userRoles, _ := RoleService.FindRolesInIds(ids)
+		var roleNames []string
+		for _, role := range userRoles {
+			roleNames = append(roleNames, role.RoleName)
+		}
+		pageList = append(pageList, &response.SysUserPageListResponse{
+			Role:    roleNames,
+			SysUser: *user,
+		})
+	}
+	return pageList, total
 }
 
 func (u *userService) FindOneByUserName(user *models.SysUser) (err error) {

@@ -13,6 +13,7 @@ func RegisterMenuRoutes(route *gin.RouterGroup) {
 		menuRoute.POST("/create", menuApi.Create)
 		menuRoute.PATCH("/update", menuApi.Update)
 		menuRoute.GET("/page", menuApi.Page)
+		menuRoute.GET("/list", menuApi.List)
 		menuRoute.DELETE("/delete/:id", menuApi.Delete)
 	}
 }

@@ -13,9 +13,9 @@ type SysMenu struct {
 	// 显示排序
 	MenuSort int64 `json:"menuSort" form:"menuSort"`
 	// 菜单类型 0目录 1菜单 2按钮
-	MenuType bool `json:"menuType" form:"menuType"`
+	MenuType int `json:"menuType" form:"menuType"`
 	// 菜单状态 0显示 1隐藏
-	Visible bool `json:"visible" form:"visible"`
+	Visible int `json:"visible" form:"visible"`
 	// 权限标识
 	Perms string `json:"perms" form:"perms"`
 	// 菜单图标
@@ -23,9 +23,9 @@ type SysMenu struct {
 	// 备注
 	Remark string `json:"remark" form:"remark"`
 	// 是否缓存 0缓存 1不缓存
-	IsCache bool `json:"isCache" form:"isCache"`
+	IsCache int `json:"isCache" form:"isCache"`
 	// 是否外链 0是 1否
-	IsFrame bool `json:"isFrame" form:"isFrame"`
+	IsFrame int `json:"isFrame" form:"isFrame"`
 	// 组件路径
 	Component string `json:"component" form:"component"`
 	// 路由地址
@@ -33,5 +33,41 @@ type SysMenu struct {
 	// 路由参数
 	Query string `json:"query" form:"query"`
 	// 菜单状态 0正常 1停用
-	Status bool `json:"status" form:"status"`
+	Status int `json:"status" form:"status"`
+}
+
+type SysMenuTreeNode struct {
+	*SysMenu
+	Children []*SysMenuTreeNode `json:"children"`
+}
+
+func BuildMenuTree(menus []*SysMenu) []*SysMenuTreeNode {
+	var tree []*SysMenuTreeNode
+	deptMap := make(map[int64]*SysMenuTreeNode)
+
+	// 第一步：构建映射，便于快速查找
+	for _, menu := range menus {
+		node := &SysMenuTreeNode{
+			SysMenu:  menu,
+			Children: nil,
+		}
+		deptMap[menu.Id] = node
+		if menu.ParentId == 0 { // 假设0是根部门的ParentId
+			tree = append(tree, node)
+		}
+	}
+
+	// 第二步：构建层级关系
+	for _, node := range deptMap {
+		if node.ParentId != 0 {
+			parent, exists := deptMap[node.ParentId]
+			if exists {
+				parent.Children = append(parent.Children, node)
+			}
+		}
+	}
+	if tree == nil {
+		tree = []*SysMenuTreeNode{}
+	}
+	return tree
 }

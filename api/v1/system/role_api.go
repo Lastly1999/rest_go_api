@@ -20,14 +20,13 @@ type RoleApi struct{}
 //	@Success	200	{object}	result.HttpResult	"desc"
 //	@Router		/role/create [post]
 func (api *RoleApi) Create(ctx *gin.Context) {
-	roleRequest := request.CreateRoleRequest{}
-	jsonResult := result.JsonResult{}
+	roleRequest := &request.CreateRoleRequest{}
+	jsonResult := result.JsonResult{Context: ctx}
 	if err := ctx.ShouldBindJSON(&roleRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	roleService := service.RoleService{}
-	if err := roleService.Create(&roleRequest); err != nil {
+	if err := service.RoleService.Create(roleRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -45,13 +44,12 @@ func (api *RoleApi) Create(ctx *gin.Context) {
 //	@Router		/role/create [patch]
 func (api *RoleApi) Update(ctx *gin.Context) {
 	roleRequest := request.UpdateRoleRequest{}
-	jsonResult := result.JsonResult{}
+	jsonResult := result.JsonResult{Context: ctx}
 	if err := ctx.ShouldBindJSON(&roleRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	roleService := service.RoleService{}
-	if err := roleService.Update(&roleRequest); err != nil {
+	if err := service.RoleService.Update(&roleRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -72,8 +70,7 @@ func (api *RoleApi) Delete(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	roleService := service.RoleService{}
-	if err := roleService.Delete(id); err != nil {
+	if err := service.RoleService.Delete(id); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
@@ -94,8 +91,7 @@ func (api *RoleApi) Info(ctx *gin.Context) {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	roleService := service.RoleService{}
-	role, err := roleService.FindOne(id)
+	role, err := service.RoleService.FindOne(id)
 	if err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
@@ -115,12 +111,11 @@ func (api *RoleApi) Info(ctx *gin.Context) {
 func (api *RoleApi) Page(ctx *gin.Context) {
 	roleListRequest := &request.RoleListRequest{}
 	jsonResult := result.JsonResult{Context: ctx}
-	if err := ctx.ShouldBindJSON(roleListRequest); err != nil {
+	if err := ctx.ShouldBind(roleListRequest); err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
 	}
-	roleService := service.RoleService{}
-	roles, total, err := roleService.Page(roleListRequest)
+	roles, total, err := service.RoleService.Page(roleListRequest)
 	if err != nil {
 		jsonResult.HttpResultError(err.Error())
 		return
